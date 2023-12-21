@@ -29,7 +29,7 @@ class FlickPortraitControls extends StatelessWidget {
       children: <Widget>[
         Positioned.fill(
           child: FlickAutoHideChild(
-            child: ColoredBox(
+            child: Container(
               color: Colors.black.withOpacity(0.3),
             ),
           ),
@@ -91,9 +91,6 @@ class FlickPortraitControls extends StatelessWidget {
                   FlickVideoProgressBar(
                     flickProgressBarSettings: progressBarSettings,
                   ),
-                  SizedBox(
-                    height: iconSize,
-                  )
                 ],
               ),
             ),
