@@ -28,6 +28,13 @@ class FlickPortraitControls extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Positioned.fill(
+          child: FlickAutoHideChild(
+            child: ColoredBox(
+              color: Colors.black.withOpacity(0.3),
+            ),
+          ),
+        ),
+        Positioned.fill(
           child: FlickShowControlsAction(
             child: FlickSeekVideoAction(
               child: Center(
@@ -36,10 +43,10 @@ class FlickPortraitControls extends StatelessWidget {
                     showIfVideoNotInitialized: false,
                     child: FlickPlayToggle(
                       size: 30,
-                      color: Colors.black,
+                      color: Colors.white,
                       padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: Colors.white70,
+                        color: Colors.black.withOpacity(0.7),
                         borderRadius: BorderRadius.circular(40),
                       ),
                     ),
@@ -56,55 +63,37 @@ class FlickPortraitControls extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  FlickVideoProgressBar(
-                    flickProgressBarSettings: progressBarSettings,
-                  ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      FlickPlayToggle(
-                        size: iconSize,
+                      FlickCurrentPosition(
+                        fontSize: fontSize,
                       ),
-                      SizedBox(
-                        width: iconSize / 2,
-                      ),
-                      FlickSoundToggle(
-                        size: iconSize,
-                      ),
-                      SizedBox(
-                        width: iconSize / 2,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          FlickCurrentPosition(
+                      FlickAutoHideChild(
+                        child: Text(
+                          ' / ',
+                          style: TextStyle(
+                            color: Colors.white,
                             fontSize: fontSize,
                           ),
-                          FlickAutoHideChild(
-                            child: Text(
-                              ' / ',
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: fontSize),
-                            ),
-                          ),
-                          FlickTotalDuration(
-                            fontSize: fontSize,
-                          ),
-                        ],
+                        ),
+                      ),
+                      FlickTotalDuration(
+                        fontSize: fontSize,
                       ),
                       Expanded(
-                        child: Container(),
-                      ),
-                      FlickSubtitleToggle(
-                        size: iconSize,
-                      ),
-                      SizedBox(
-                        width: iconSize / 2,
+                        child: SizedBox(),
                       ),
                       FlickFullScreenToggle(
                         size: iconSize,
                       ),
                     ],
                   ),
+                  FlickVideoProgressBar(
+                    flickProgressBarSettings: progressBarSettings,
+                  ),
+                  SizedBox(
+                    height: iconSize,
+                  )
                 ],
               ),
             ),
