@@ -4,7 +4,7 @@ import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class FlickVideoPlayer extends StatefulWidget {
   const FlickVideoPlayer({
@@ -24,8 +24,6 @@ class FlickVideoPlayer extends StatefulWidget {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight
     ],
-    this.wakelockEnabled = true,
-    this.wakelockEnabledFullscreen = true,
     this.webKeyDownHandler = flickDefaultWebKeyDownHandler,
   }) : super(key: key);
 
@@ -53,14 +51,6 @@ class FlickVideoPlayer extends StatefulWidget {
   /// Preferred device orientation in full-screen.
   final List<DeviceOrientation> preferredDeviceOrientationFullscreen;
 
-  /// Prevents the screen from turning off automatically.
-  ///
-  /// Use [wakeLockEnabledFullscreen] to manage wakelock for full-screen.
-  final bool wakelockEnabled;
-
-  /// Prevents the screen from turning off automatically in full-screen.
-  final bool wakelockEnabledFullscreen;
-
   /// Callback called on keyDown for web, used for keyboard shortcuts.
   final Function(KeyboardEvent, FlickManager) webKeyDownHandler;
 
@@ -85,10 +75,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     _setSystemUIOverlays();
     _setPreferredOrientation();
 
-    if (widget.wakelockEnabled) {
-      Wakelock.enable();
-    }
-
     if (kIsWeb) {
       document.documentElement?.onFullscreenChange
           .listen(_webFullscreenListener);
@@ -99,12 +85,15 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     flickManager.flickControlManager!.removeListener(listener);
-    if (widget.wakelockEnabled) {
-      Wakelock.disable();
+
+    if (await WakelockPlus.enabled) {
+      WakelockPlus.disable();
     }
+
     WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
   }
 
@@ -128,12 +117,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     }
   }
 
-  _switchToFullscreen() {
-    if (widget.wakelockEnabledFullscreen) {
-      /// Disable previous wakelock setting.
-      Wakelock.disable();
-      Wakelock.enable();
-    }
+  _switchToFullscreen() async {
+    /// Disable previous wakelock setting.
+    await WakelockPlus.enable();
+    await WakelockPlus.disable();
 
     _isFullscreen = true;
     _setPreferredOrientation();
@@ -160,12 +147,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     }
   }
 
-  _exitFullscreen() {
-    if (widget.wakelockEnabled) {
-      /// Disable previous wakelock setting.
-      Wakelock.disable();
-      Wakelock.enable();
-    }
+  _exitFullscreen() async {
+    /// Disable previous wakelock setting.
+    await WakelockPlus.disable();
+    await WakelockPlus.enable();
 
     _isFullscreen = false;
 
