@@ -85,12 +85,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   }
 
   @override
-  void dispose() async {
+  void dispose() {
     flickManager.flickControlManager!.removeListener(listener);
 
-    if (await WakelockPlus.enabled) {
-      WakelockPlus.disable();
-    }
+    WakelockPlus.disable();
 
     WidgetsBinding.instance.removeObserver(this);
 
