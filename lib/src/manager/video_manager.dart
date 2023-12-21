@@ -22,6 +22,7 @@ class FlickVideoManager extends ChangeNotifier {
   VideoPlayerValue? _videoPlayerValue;
   VideoPlayerController? _videoPlayerController;
   bool _mounted = true;
+  QualityEnum quality = QualityEnum.hd;
 
   /// Auto-play the video after initialization.
   final bool autoPlay;
@@ -78,6 +79,76 @@ class FlickVideoManager extends ChangeNotifier {
       _videoChangeCallback!();
     }
     _videoChangeCallback = null;
+    _notify();
+  }
+
+  changeVideoQuality() async {
+    late String url;
+    late String newUrl;
+
+    url = videoPlayerController!.dataSource.split('_')[0];
+    Uri uri = Uri.parse(url);
+    List<String> segmentsPath = uri.pathSegments;
+    String path = segmentsPath.length > 1 ? segmentsPath[2] : "";
+
+    if (quality == QualityEnum.sd) {
+      newUrl =
+          'https://d3fziriexmtqet.cloudfront.net/video/$path/${path}_360p.mp4';
+    } else if (quality == QualityEnum.hd) {
+      newUrl =
+          'https://d3fziriexmtqet.cloudfront.net/video/$path/${path}_720p.mp4';
+    } else {
+      newUrl =
+          'https://d3fziriexmtqet.cloudfront.net/video/$path/${path}_1080p.mp4';
+    }
+
+    //  Change the videoPlayerController with the new controller,
+    VideoPlayerController? oldController = videoPlayerController;
+    _flickManager.flickControlManager!.pause();
+    _videoPlayerController = VideoPlayerController.networkUrl(
+      Uri.parse(newUrl),
+    );
+
+    int oldMillisecond = oldController!.value.position.inMilliseconds;
+
+    // notify the controller change and remove listeners from the old controller.
+    oldController.removeListener(_videoListener);
+    videoPlayerController!.addListener(_videoListener);
+
+    // Video listener is called once video starts playing,
+    // to reset the player UI immediately videoPlayerValue has to be changed here.
+    _videoPlayerValue = videoPlayerController!.value;
+    _currentVideoEnded = false;
+    _notify();
+
+    // Dispose the old controller after 5 seconds.
+    Future.delayed(const Duration(seconds: 5), () => oldController.dispose());
+
+    // Initialize the video if not initialized
+    // (User can initialize the video while passing to flick).
+    if (!videoPlayerController!.value.isInitialized && autoInitialize) {
+      try {
+        await videoPlayerController!.initialize();
+      } catch (err) {
+        _flickManager._handleErrorInVideo();
+      }
+    }
+
+    // If movie already ended, restart the movie (Happens when previously used controller is
+    // used again).
+    if (videoPlayerController!.value.position ==
+        videoPlayerController!.value.duration) {
+      videoPlayerController!.seekTo(
+          const Duration(hours: 0, minutes: 0, seconds: 0, milliseconds: 0));
+    } else {
+      videoPlayerController!.seekTo(Duration(milliseconds: oldMillisecond));
+    }
+
+    if (autoPlay && ModalRoute.of(_flickManager._context!)!.isCurrent) {
+      // Start playing the video.
+      _flickManager.flickControlManager!.play();
+    }
+
     _notify();
   }
 

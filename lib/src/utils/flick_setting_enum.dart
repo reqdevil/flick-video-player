@@ -1,0 +1,4 @@
+enum VideoSettingEnum {
+  quality,
+  speed,
+}
