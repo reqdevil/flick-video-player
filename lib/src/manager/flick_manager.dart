@@ -90,11 +90,6 @@ class FlickManager {
     _flickDisplayManager!._handleVideoSeek(forward: forward);
   }
 
-  _handleVolumeChange({required double volume}) {
-    // assert(forward != null);
-    _flickDisplayManager!._handleVolumeChange(volume);
-  }
-
   /// Dispose the flick manager.
   ///
   /// This internally disposes all the supporting managers.

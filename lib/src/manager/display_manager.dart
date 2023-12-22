@@ -134,13 +134,6 @@ class FlickDisplayManager extends ChangeNotifier {
     handleShowPlayerControls();
   }
 
-  // Called when user calls seekForward or seekBackward
-  // on the controlManager.
-  _handleVolumeChange(double volume) {
-    this.volume = volume;
-    handleShowVolumeLevel();
-  }
-
   _notify() {
     if (_mounted) {
       notifyListeners();
