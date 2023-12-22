@@ -92,6 +92,8 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   void didChangeMetrics() {
+    print(_isReallyInitialized.toString());
+
     if (!_isReallyInitialized) {
       return;
     }
