@@ -69,7 +69,12 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
         Positioned.fill(
           child: FlickAutoHideChild(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: controlManager.isFullscreen
+                  ? EdgeInsets.only(
+                      left: MediaQuery.viewPaddingOf(context).top,
+                      right: MediaQuery.viewPaddingOf(context).top,
+                    )
+                  : const EdgeInsets.all(10.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -166,9 +171,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                     ),
                   ),
                   if (controlManager.isFullscreen)
-                    SizedBox(
-                      height: MediaQuery.viewPaddingOf(context).bottom,
-                    )
+                    SizedBox(height: MediaQuery.viewPaddingOf(context).top)
                 ],
               ),
             ),
