@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class FlickVideoPlayer extends StatefulWidget {
@@ -89,9 +88,11 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   // Pushes the full-screen if [FlickControlManager] is changed to full-screen.
   void listener() async {
     if (flickManager.flickControlManager!.isFullscreen && !_isFullscreen) {
+      print('listener full');
       _switchToFullscreen();
     } else if (_isFullscreen &&
         !flickManager.flickControlManager!.isFullscreen) {
+      print('listener normal');
       _exitFullscreen();
     }
   }

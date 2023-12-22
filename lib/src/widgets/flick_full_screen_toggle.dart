@@ -61,7 +61,6 @@ class FlickFullScreenToggle extends StatelessWidget {
       key: key,
       onTap: () {
         controlManager.toggleFullscreen();
-        print(controlManager.isFullscreen);
 
         if (controlManager.isFullscreen) {
           FlickHelpers().lockOrientationToLandScape();
