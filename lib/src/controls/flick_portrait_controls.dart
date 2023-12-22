@@ -70,8 +70,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             child: Padding(
               padding: controlManager.isFullscreen
                   ? EdgeInsets.only(
-                      left: MediaQuery.viewPaddingOf(context).top,
-                      right: MediaQuery.viewPaddingOf(context).top,
+                      left: 100,
+                      right: 50,
                     )
                   : const EdgeInsets.all(10.0),
               child: Column(
@@ -170,12 +170,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                     ),
                   ),
                   if (controlManager.isFullscreen)
-                    SizedBox(height: MediaQuery.viewPaddingOf(context).top),
-                  if (controlManager.isFullscreen)
-                    Text(
-                      'asdsad',
-                      style: TextStyle(color: Colors.white),
-                    )
+                    SizedBox(height: MediaQuery.viewPaddingOf(context).top * 2),
                 ],
               ),
             ),
