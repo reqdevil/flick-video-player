@@ -29,7 +29,7 @@ class FlickVideoProgressBar extends StatelessWidget {
 
     if (videoPlayerValue == null) return Container();
 
-    void seekToRelativePosition(Offset globalPosition) {
+    void seekToRelativePosition(Offset globalPosition) async {
       final box = context.findRenderObject() as RenderBox;
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
@@ -40,8 +40,8 @@ class FlickVideoProgressBar extends StatelessWidget {
           .keys
           .first;
 
+      await controlManager.seekTo(position);
       controlManager.setPlaybackSpeed(double.parse(newSpeed));
-      controlManager.seekTo(position);
     }
 
     return LayoutBuilder(builder: (context, size) {

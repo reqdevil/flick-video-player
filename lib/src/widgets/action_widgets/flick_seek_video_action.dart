@@ -48,7 +48,7 @@ class FlickSeekVideoAction extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onDoubleTap: () {
+              onDoubleTap: () async {
                 final String newSpeed = FlickHelpers.speedList
                     .where((element) =>
                         element.values.first == videoManager.videoSpeed)
@@ -57,7 +57,7 @@ class FlickSeekVideoAction extends StatelessWidget {
                     .first;
 
                 print(newSpeed);
-                controlManager.seekBackward(duration);
+                await controlManager.seekBackward(duration);
                 controlManager.setPlaybackSpeed(double.parse(newSpeed));
               },
               child: Align(
@@ -82,7 +82,7 @@ class FlickSeekVideoAction extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onDoubleTap: () {
+              onDoubleTap: () async {
                 final String newSpeed = FlickHelpers.speedList
                     .where((element) =>
                         element.values.first == videoManager.videoSpeed)
@@ -91,7 +91,7 @@ class FlickSeekVideoAction extends StatelessWidget {
                     .first;
 
                 print(newSpeed);
-                controlManager.seekForward(duration);
+                await controlManager.seekForward(duration);
                 controlManager.setPlaybackSpeed(double.parse(newSpeed));
               },
               child: Align(
