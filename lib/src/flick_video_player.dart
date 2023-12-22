@@ -87,12 +87,15 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() {
     super.didChangeMetrics();
 
-    final Size newSize = MediaQuery.of(context).size;
-    if (newSize.width > newSize.height) {
-      print('landscape');
-    } else {
-      print('portrait');
-    }
+    Future.delayed(Duration(milliseconds: 500), () {
+      final Size newSize = MediaQuery.of(context).size;
+
+      if (newSize.width > newSize.height) {
+        flickManager.flickControlManager!.enterFullscreen();
+      } else {
+        flickManager.flickControlManager!.exitFullscreen();
+      }
+    });
   }
 
   // Listener on [FlickControlManager],
