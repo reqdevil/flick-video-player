@@ -7,15 +7,15 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 /// Show a widget based on the full-screen state of the player and toggle the same.
 class FlickFullScreenToggle extends StatelessWidget {
-  const FlickFullScreenToggle(
-      {Key? key,
-      this.enterFullScreenChild,
-      this.exitFullScreenChild,
-      this.size,
-      this.color,
-      this.padding,
-      this.decoration})
-      : super(key: key);
+  const FlickFullScreenToggle({
+    Key? key,
+    this.enterFullScreenChild,
+    this.exitFullScreenChild,
+    this.size,
+    this.color,
+    this.padding,
+    this.decoration,
+  }) : super(key: key);
 
   /// Widget shown when player is not in full-screen.
   ///
@@ -62,13 +62,13 @@ class FlickFullScreenToggle extends StatelessWidget {
 
     return GestureDetector(
       key: key,
-      onTap: () {
+      onTap: () async {
         controlManager.toggleFullscreen();
 
         if (controlManager.isFullscreen) {
-          FlickHelpers().lockOrientationToLandScape();
+          await FlickHelpers().lockOrientationToLandScape();
         } else {
-          FlickHelpers().lockOrientationToPortrait();
+          await FlickHelpers().lockOrientationToPortrait();
 
           StreamSubscription? accelerometerSubscription;
           accelerometerSubscription =

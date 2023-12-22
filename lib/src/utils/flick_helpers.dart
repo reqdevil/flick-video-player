@@ -19,21 +19,21 @@ class FlickHelpers {
     {'1080p': QualityEnum.uhd}
   ];
 
-  void lockOrientationToPortrait() {
-    SystemChrome.setPreferredOrientations([
+  Future<void> lockOrientationToPortrait() async {
+    await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
   }
 
-  void lockOrientationToLandScape() {
-    SystemChrome.setPreferredOrientations([
+  Future<void> lockOrientationToLandScape() async {
+    await SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
   }
 
-  void unlockOrientations() {
-    SystemChrome.setPreferredOrientations([
+  Future<void> unlockOrientations() async {
+    await SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
