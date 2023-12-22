@@ -95,6 +95,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         GestureDetector(
                           onTap: widget.popFunction,
                           child: Container(
+                            padding: EdgeInsets.all(6),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.7),
                               shape: BoxShape.circle,
@@ -104,7 +105,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                               child: const Icon(
                                 Icons.chevron_left,
                                 color: Colors.white,
-                                size: 30,
+                                size: 28,
                               ),
                             ),
                           ),
@@ -119,6 +120,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           });
                         },
                         child: Container(
+                          padding: EdgeInsets.all(6),
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             shape: BoxShape.circle,
@@ -126,7 +128,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           child: Icon(
                             Icons.settings,
                             color: Colors.white,
-                            size: 30,
+                            size: 28,
                           ),
                         ),
                       ),
