@@ -34,6 +34,11 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   }
 
   Widget playBody() {
+    double padding = MediaQuery.viewPaddingOf(context).left >
+            MediaQuery.viewPaddingOf(context).right
+        ? MediaQuery.viewPaddingOf(context).left
+        : MediaQuery.viewPaddingOf(context).right;
+
     return Stack(
       children: <Widget>[
         Positioned.fill(
@@ -70,8 +75,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             child: Padding(
               padding: controlManager.isFullscreen
                   ? EdgeInsets.only(
-                      left: MediaQuery.viewPaddingOf(context).top * 2,
-                      right: MediaQuery.viewPaddingOf(context).top * 2,
+                      left: padding,
+                      right: padding,
                     )
                   : const EdgeInsets.all(10.0),
               child: Column(
@@ -134,8 +139,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             child: Padding(
               padding: controlManager.isFullscreen
                   ? EdgeInsets.only(
-                      left: MediaQuery.viewPaddingOf(context).top * 2,
-                      right: MediaQuery.viewPaddingOf(context).top * 2,
+                      left: padding,
+                      right: padding,
                     )
                   : const EdgeInsets.all(10.0),
               child: Column(
@@ -174,8 +179,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       handleRadius: 5,
                     ),
                   ),
-                  if (controlManager.isFullscreen)
-                    SizedBox(width: MediaQuery.viewPaddingOf(context).top * 2),
+                  if (controlManager.isFullscreen) SizedBox(height: padding),
                 ],
               ),
             ),
