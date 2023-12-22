@@ -41,7 +41,7 @@ class FlickVideoProgressBar extends StatelessWidget {
           .first;
 
       await controlManager.seekTo(position);
-      controlManager.setPlaybackSpeed(double.parse(newSpeed));
+      await controlManager.setPlaybackSpeed(double.parse(newSpeed));
     }
 
     return LayoutBuilder(builder: (context, size) {

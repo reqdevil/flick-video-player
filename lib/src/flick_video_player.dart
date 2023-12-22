@@ -14,11 +14,6 @@ class FlickVideoPlayer extends StatefulWidget {
     ),
     this.systemUIOverlay = SystemUiOverlay.values,
     this.systemUIOverlayFullscreen = const [],
-    this.preferredDeviceOrientation = const [
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight
-    ],
   }) : super(key: key);
 
   final FlickManager flickManager;
@@ -34,11 +29,6 @@ class FlickVideoPlayer extends StatefulWidget {
   /// SystemUIOverlay to show in full-screen.
   final List<SystemUiOverlay> systemUIOverlayFullscreen;
 
-  /// Preferred device orientation.
-  ///
-  /// Use [preferredDeviceOrientationFullscreen] to manage orientation for full-screen.
-  final List<DeviceOrientation> preferredDeviceOrientation;
-
   @override
   _FlickVideoPlayerState createState() => _FlickVideoPlayerState();
 }
@@ -53,14 +43,13 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   void initState() {
+    super.initState();
+
     WidgetsBinding.instance.addObserver(this);
     flickManager = widget.flickManager;
     flickManager.registerContext(context);
     flickManager.flickControlManager!.addListener(listener);
     _setSystemUIOverlays();
-    FlickHelpers().unlockOrientations();
-
-    super.initState();
   }
 
   @override
@@ -68,8 +57,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     flickManager.flickControlManager!.removeListener(listener);
 
     WakelockPlus.disable();
-
-    FlickHelpers().lockOrientationToPortrait();
 
     WidgetsBinding.instance.removeObserver(this);
 

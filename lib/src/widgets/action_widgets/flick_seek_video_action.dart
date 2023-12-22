@@ -56,9 +56,8 @@ class FlickSeekVideoAction extends StatelessWidget {
                     .keys
                     .first;
 
-                print(newSpeed);
                 await controlManager.seekBackward(duration);
-                controlManager.setPlaybackSpeed(double.parse(newSpeed));
+                await controlManager.setPlaybackSpeed(double.parse(newSpeed));
               },
               child: Align(
                 alignment: Alignment.center,
@@ -90,9 +89,8 @@ class FlickSeekVideoAction extends StatelessWidget {
                     .keys
                     .first;
 
-                print(newSpeed);
                 await controlManager.seekForward(duration);
-                controlManager.setPlaybackSpeed(double.parse(newSpeed));
+                await controlManager.setPlaybackSpeed(double.parse(newSpeed));
               },
               child: Align(
                 alignment: Alignment.center,

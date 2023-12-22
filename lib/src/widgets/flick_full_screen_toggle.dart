@@ -73,7 +73,10 @@ class FlickFullScreenToggle extends StatelessWidget {
           StreamSubscription? accelerometerSubscription;
           accelerometerSubscription =
               accelerometerEventStream().listen((event) {
-            print('X: ${event.x}, Y: ${event.y}, Z: ${event.z}');
+            if (event.y > 8) {
+              FlickHelpers().unlockOrientations();
+              accelerometerSubscription?.cancel();
+            }
           });
         }
       },

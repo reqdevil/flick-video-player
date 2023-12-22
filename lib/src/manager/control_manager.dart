@@ -1,6 +1,6 @@
 part of flick_manager;
 
-/// Manages action on video player like play, mute and others.
+/// Manages action on video player like play, subtitle, seek and others.
 ///
 /// FlickControlManager helps user interact with the player,
 /// like change play state, change volume, seek video, enter/exit full-screen.
@@ -12,17 +12,12 @@ class FlickControlManager extends ChangeNotifier {
   final FlickManager _flickManager;
   bool _mounted = true;
 
-  bool _isMute = false;
   bool _isSub = false;
   bool _isFullscreen = false;
   bool _isAutoPause = false;
-  double? _volume;
 
   /// Is player in full-screen.
   bool get isFullscreen => _isFullscreen;
-
-  /// Is player mute.
-  bool get isMute => _isMute;
 
   /// Is subtitle visible.
   bool get isSub => _isSub;
@@ -68,11 +63,6 @@ class FlickControlManager extends ChangeNotifier {
   /// Play the video.
   Future<void> play() async {
     _isAutoPause = false;
-
-    // When video changes, the new video has to be muted.
-    if (_isMute && _videoPlayerController!.value.volume != 0) {
-      _videoPlayerController!.setVolume(0);
-    }
 
     await _videoPlayerController!.play();
     _flickManager.flickDisplayManager!.handleShowPlayerControls();
@@ -124,23 +114,6 @@ class FlickControlManager extends ChangeNotifier {
     );
   }
 
-  /// Mute the video.
-  Future<void> mute() async {
-    _isMute = true;
-    await setVolume(0, isMute: true);
-  }
-
-  /// Un-mute the video.
-  Future<void> unmute() async {
-    _isMute = false;
-    await setVolume(_volume ?? 1);
-  }
-
-  /// Toggle mute.
-  Future<void> toggleMute() async {
-    _isMute ? unmute() : mute();
-  }
-
   /// hide the subtitle.
   Future<void> hideSubtitle() async {
     _isSub = false;
@@ -156,16 +129,6 @@ class FlickControlManager extends ChangeNotifier {
   /// Toggle subtitle.
   Future<void> toggleSubtitle() async {
     _isSub ? hideSubtitle() : showSubtitle();
-  }
-
-  /// Set volume between 0.0 - 1.0,
-  /// 0.0 being mute and 1.0 full volume.
-  Future<void> setVolume(double volume, {bool isMute = false}) async {
-    await _videoPlayerController?.setVolume(volume);
-    if (!isMute) {
-      _volume = volume;
-    }
-    _notify();
   }
 
   /// Sets the playback speed of [this].
@@ -185,45 +148,6 @@ class FlickControlManager extends ChangeNotifier {
   Future<void> setPlaybackSpeed(double speed) async {
     await _videoPlayerController!.setPlaybackSpeed(speed);
     notifyListeners();
-  }
-
-  /// Increase volume between 0.0 - 1.0,
-  /// 0.0 being mute and 1.0 full volume.
-  Future<void> increaseVolume(double increaseBy) async {
-    final currentVolume = _videoPlayerController?.value.volume ?? 0;
-    final volumeAfterIncrease = currentVolume + increaseBy;
-    final volume = _verifyVolumeBounds(volumeAfterIncrease);
-    await setVolume(volume);
-    _flickManager._handleVolumeChange(volume: volume);
-  }
-
-  /// Decrease volume between 0.0 - 1.0,
-  /// 0.0 being mute and 1.0 full volume.
-  Future<void> decreaseVolume(double decreaseBy) async {
-    final currentVolume = _videoPlayerController?.value.volume ?? 0;
-    final volumeAfterDecrease = currentVolume - decreaseBy;
-    final volume = _verifyVolumeBounds(volumeAfterDecrease);
-    await setVolume(volume);
-    _flickManager._handleVolumeChange(volume: volume);
-  }
-
-  double _verifyVolumeBounds(double volume) {
-    var boundedVolume;
-    if (volume > 1) {
-      boundedVolume = 1;
-    } else if (volume < 0) {
-      boundedVolume = 0;
-    } else {
-      boundedVolume = double.parse(volume.toStringAsFixed(2));
-    }
-
-    if (boundedVolume == 0) {
-      _isMute = true;
-    } else {
-      _isMute = false;
-    }
-
-    return boundedVolume;
   }
 
   _notify() {
