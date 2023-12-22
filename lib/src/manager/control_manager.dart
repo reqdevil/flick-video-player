@@ -29,7 +29,6 @@ class FlickControlManager extends ChangeNotifier {
   /// Enter full-screen.
   void enterFullscreen() {
     _isFullscreen = true;
-    FlickHelpers().lockOrientationToLandScape();
     _flickManager._handleToggleFullscreen();
     _notify();
   }
@@ -37,18 +36,6 @@ class FlickControlManager extends ChangeNotifier {
   /// Exit full-screen.
   void exitFullscreen() {
     _isFullscreen = false;
-    FlickHelpers().lockOrientationToPortrait();
-
-    StreamSubscription? accelerometerSubscription;
-    accelerometerSubscription = accelerometerEventStream().listen((event) {
-      print('Event Y' + event.y.toString());
-
-      if (event.y > 8) {
-        FlickHelpers().unlockOrientations();
-        accelerometerSubscription?.cancel();
-      }
-    });
-
     _flickManager._handleToggleFullscreen();
     _notify();
   }
