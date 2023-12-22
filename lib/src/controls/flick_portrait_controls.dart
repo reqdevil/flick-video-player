@@ -173,6 +173,10 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       handleRadius: 5,
                     ),
                   ),
+                  if (controlManager.isFullscreen)
+                    SizedBox(
+                      height: MediaQuery.viewPaddingOf(context).bottom,
+                    )
                 ],
               ),
             ),
