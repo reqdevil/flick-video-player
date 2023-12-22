@@ -44,7 +44,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   @override
   void initState() {
     super.initState();
-    FlickHelpers().lockOrientationToPortrait();
+    FlickHelpers().unlockOrientations();
     WidgetsBinding.instance.addObserver(this);
     flickManager = widget.flickManager;
     flickManager.registerContext(context);
@@ -72,19 +72,20 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     return false;
   }
 
-  // @override
-  // void didChangeMetrics() {
-  //   super.didChangeMetrics();
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
 
-  //   final Size newSize = MediaQuery.of(context).size;
-  //   final bool isLandscape = newSize.width > newSize.height;
+    final Size newSize = MediaQuery.of(context).size;
+    final bool isLandscape = newSize.width > newSize.height;
+    print('isLandscape: $isLandscape');
 
-  //   if (isLandscape && !flickManager.flickControlManager!.isFullscreen) {
-  //     flickManager.flickControlManager!.enterFullscreen();
-  //   } else if (!isLandscape && flickManager.flickControlManager!.isFullscreen) {
-  //     flickManager.flickControlManager!.exitFullscreen();
-  //   }
-  // }
+    // if (isLandscape && !flickManager.flickControlManager!.isFullscreen) {
+    //   flickManager.flickControlManager!.enterFullscreen();
+    // } else if (!isLandscape && flickManager.flickControlManager!.isFullscreen) {
+    //   flickManager.flickControlManager!.exitFullscreen();
+    // }
+  }
 
   // Listener on [FlickControlManager],
   // Pushes the full-screen if [FlickControlManager] is changed to full-screen.
