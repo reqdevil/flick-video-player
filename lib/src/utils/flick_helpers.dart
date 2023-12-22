@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/services.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 class FlickHelpers {
   static final List<Map<String, SpeedEnum>> speedList = [
@@ -38,5 +41,35 @@ class FlickHelpers {
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+  }
+
+  Future<bool> getSingleAccelerometerEventYValue() async {
+    Completer<bool> completer = Completer();
+    StreamSubscription<AccelerometerEvent>? subscription;
+
+    subscription = accelerometerEventStream().listen(
+      (AccelerometerEvent event) {
+        bool isPortrait = true;
+
+        if (event.y > 7) {
+          isPortrait = true;
+        } else if (event.x > 7 || event.x < -7) {
+          isPortrait = false;
+        }
+
+        if (!completer.isCompleted) {
+          completer.complete(isPortrait);
+        }
+
+        subscription?.cancel();
+      },
+      onError: (error) {
+        if (!completer.isCompleted) {
+          completer.completeError(error);
+        }
+      },
+    );
+
+    return completer.future; // This will be the y value
   }
 }

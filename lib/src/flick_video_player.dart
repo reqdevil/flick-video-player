@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class FlickVideoPlayer extends StatefulWidget {
@@ -37,7 +38,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     with WidgetsBindingObserver {
   late FlickManager flickManager;
   bool _isFullscreen = false;
-  bool _isFirstCall = true;
   OverlayEntry? _overlayEntry;
 
   @override
@@ -75,23 +75,12 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   }
 
   @override
-  void didChangeMetrics() {
-    print("didChangeMetrics called");
+  void didChangeMetrics() async {
+    bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
-    if (_isFirstCall) {
-      print("First call detected");
-      _isFirstCall = false;
-      return;
-    }
-
-    print("Executing subsequent logic, isFirstCall: $_isFirstCall");
-
-    final Size newSize = MediaQuery.of(context).size;
-    final bool isPortrait = newSize.width > newSize.height;
-
-    if (isPortrait && flickManager.flickControlManager!.isFullscreen) {
+    if (isPortrait && _isFullscreen) {
       flickManager.flickControlManager!.exitFullscreen();
-    } else if (!isPortrait && !flickManager.flickControlManager!.isFullscreen) {
+    } else if (!isPortrait && !_isFullscreen) {
       flickManager.flickControlManager!.enterFullscreen();
     }
   }
