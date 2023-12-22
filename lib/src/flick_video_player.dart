@@ -77,7 +77,13 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     super.didChangeMetrics();
 
     if (mounted) {
-      flickManager.flickControlManager!.toggleFullscreen();
+      final Size newSize = MediaQuery.of(context).size;
+
+      if (newSize.width > newSize.height) {
+        _switchToFullscreen();
+      } else {
+        _exitFullscreen();
+      }
     }
   }
 
