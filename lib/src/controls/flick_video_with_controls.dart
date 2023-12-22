@@ -20,14 +20,15 @@ class FlickVideoWithControls extends StatefulWidget {
   /// Create custom controls or use any of these [FlickPortraitControls], [FlickLandscapeControls]
   final Widget controls;
 
-  get videoPlayerController => null;
-
   @override
   _FlickVideoWithControlsState createState() => _FlickVideoWithControlsState();
 }
 
 class _FlickVideoWithControlsState extends State<FlickVideoWithControls> {
   VideoPlayerController? _videoPlayerController;
+
+  bool isContain = true;
+
   @override
   void didChangeDependencies() {
     VideoPlayerController? newController =
@@ -45,6 +46,7 @@ class _FlickVideoWithControlsState extends State<FlickVideoWithControls> {
     FlickControlManager controlManager =
         Provider.of<FlickControlManager>(context);
     bool _showVideoCaption = controlManager.isSub;
+
     return IconTheme(
       data: const IconThemeData(
         color: Colors.white,
@@ -62,10 +64,17 @@ class _FlickVideoWithControlsState extends State<FlickVideoWithControls> {
             child: Stack(
               children: <Widget>[
                 Center(
-                  child: FlickNativeVideoPlayer(
-                    videoPlayerController: _videoPlayerController,
-                    fit: BoxFit.contain,
-                    aspectRatioWhenLoading: 16 / 9,
+                  child: GestureDetector(
+                    onScaleStart: (details) {
+                      setState(() {
+                        isContain = !isContain;
+                      });
+                    },
+                    child: FlickNativeVideoPlayer(
+                      videoPlayerController: _videoPlayerController,
+                      fit: isContain ? BoxFit.contain : BoxFit.cover,
+                      aspectRatioWhenLoading: 16 / 9,
+                    ),
                   ),
                 ),
                 Positioned.fill(

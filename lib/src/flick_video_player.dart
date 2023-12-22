@@ -77,14 +77,11 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     super.didChangeMetrics();
 
     final Size newSize = MediaQuery.of(context).size;
+    final bool isLandscape = newSize.width > newSize.height;
 
-    if (newSize.width > newSize.height &&
-        !flickManager.flickControlManager!.isFullscreen &&
-        !_isFullscreen) {
+    if (isLandscape && !flickManager.flickControlManager!.isFullscreen) {
       flickManager.flickControlManager!.enterFullscreen();
-    } else if (newSize.width < newSize.height &&
-        _isFullscreen &&
-        flickManager.flickControlManager!.isFullscreen) {
+    } else if (!isLandscape && flickManager.flickControlManager!.isFullscreen) {
       flickManager.flickControlManager!.exitFullscreen();
     }
   }
