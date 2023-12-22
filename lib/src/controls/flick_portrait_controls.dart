@@ -319,10 +319,10 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   }
 
   Widget speedSettings() {
-    return ListView.builder(
-      itemCount: FlickHelpers.speedList.length,
-      itemBuilder: (context, index) {
-        return ListTile(
+    return ListView(
+      children: List.generate(
+        FlickHelpers.speedList.length,
+        (index) => ListTile(
           title: Text(
             FlickHelpers.speedList[index].keys.first,
             style: TextStyle(
@@ -350,8 +350,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
               double.parse(FlickHelpers.speedList[index].keys.first),
             );
           },
-        );
-      },
+        ),
+      ),
     );
   }
 }
