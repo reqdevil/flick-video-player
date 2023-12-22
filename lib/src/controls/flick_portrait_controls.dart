@@ -104,7 +104,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                               child: const Icon(
                                 Icons.chevron_left,
                                 color: Colors.white,
-                                size: 18,
+                                size: 30,
                               ),
                             ),
                           ),
@@ -126,7 +126,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           child: Icon(
                             Icons.settings,
                             color: Colors.white,
-                            size: 18,
+                            size: 30,
                           ),
                         ),
                       ),
