@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:flick_video_player/src/utils/icons/flick_video_icons.dart';
+import 'package:flick_video_player/src/utils/flick_video_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

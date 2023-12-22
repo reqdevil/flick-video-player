@@ -25,15 +25,8 @@ class FlickVideoIcons {
   static const _kFontFam = 'VideoIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData cog = IconData(
-    0xf013,
-    fontFamily: _kFontFam,
-    fontPackage: _kFontPkg,
-  );
-
-  static const IconData chevron_down = IconData(
-    0xf078,
-    fontFamily: _kFontFam,
-    fontPackage: _kFontPkg,
-  );
+  static const IconData cog =
+      IconData(0xf013, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData chevron_down =
+      IconData(0xf078, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
