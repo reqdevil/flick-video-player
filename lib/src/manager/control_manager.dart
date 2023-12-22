@@ -28,7 +28,6 @@ class FlickControlManager extends ChangeNotifier {
 
   /// Enter full-screen.
   void enterFullscreen() {
-    print('control enter');
     _isFullscreen = true;
     _flickManager._handleToggleFullscreen();
     _notify();
@@ -36,7 +35,6 @@ class FlickControlManager extends ChangeNotifier {
 
   /// Exit full-screen.
   void exitFullscreen() {
-    print('control exit');
     _isFullscreen = false;
     _flickManager._handleToggleFullscreen();
     _notify();
@@ -44,12 +42,9 @@ class FlickControlManager extends ChangeNotifier {
 
   /// Toggle full-screen.
   void toggleFullscreen() {
-    print('toggle');
     if (_isFullscreen) {
-      print('toggle exit');
       exitFullscreen();
     } else {
-      print('toggle enter');
       enterFullscreen();
     }
   }

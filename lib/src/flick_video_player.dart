@@ -37,6 +37,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     with WidgetsBindingObserver {
   late FlickManager flickManager;
   bool _isFullscreen = false;
+  bool? _lastMetricValue;
   OverlayEntry? _overlayEntry;
 
   @override
@@ -77,11 +78,14 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() async {
     bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
-    if (isPortrait && _isFullscreen) {
-      print('change exit');
-      flickManager.flickControlManager!.exitFullscreen();
-    } else if (!isPortrait && !_isFullscreen) {
-      flickManager.flickControlManager!.enterFullscreen();
+    if (_lastMetricValue == null || _lastMetricValue != isPortrait) {
+      if (isPortrait && _isFullscreen) {
+        flickManager.flickControlManager!.exitFullscreen();
+      } else if (!isPortrait && !_isFullscreen) {
+        flickManager.flickControlManager!.enterFullscreen();
+      }
+
+      _lastMetricValue = isPortrait;
     }
   }
 
@@ -89,11 +93,9 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   // Pushes the full-screen if [FlickControlManager] is changed to full-screen.
   void listener() async {
     if (flickManager.flickControlManager!.isFullscreen && !_isFullscreen) {
-      print('listener enter');
       _switchToFullscreen();
     } else if (_isFullscreen &&
         !flickManager.flickControlManager!.isFullscreen) {
-      print('listener exit');
       _exitFullscreen();
     }
   }
