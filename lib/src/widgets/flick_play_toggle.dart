@@ -85,20 +85,21 @@ class FlickPlayToggle extends StatelessWidget {
             : playWidget;
 
     return GestureDetector(
-        key: key,
-        onTap: () {
-          if (togglePlay != null) {
-            togglePlay!();
-          } else {
-            videoManager.isVideoEnded
-                ? controlManager.replay()
-                : controlManager.togglePlay();
-          }
-        },
-        child: Container(
-          padding: padding,
-          decoration: decoration,
-          child: child,
-        ));
+      key: key,
+      onTap: () {
+        if (togglePlay != null) {
+          togglePlay!();
+        } else {
+          videoManager.isVideoEnded
+              ? controlManager.replay()
+              : controlManager.togglePlay();
+        }
+      },
+      child: Container(
+        padding: padding,
+        decoration: decoration,
+        child: child,
+      ),
+    );
   }
 }

@@ -95,8 +95,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         GestureDetector(
                           onTap: widget.popFunction,
                           child: Container(
-                            width: 30.w,
-                            height: 30.w,
+                            width: 40,
+                            height: 40,
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.7),
                               shape: BoxShape.circle,
@@ -134,8 +134,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           });
                         },
                         child: Container(
-                          width: 30.w,
-                          height: 30.w,
+                          width: 40,
+                          height: 40,
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             shape: BoxShape.circle,
