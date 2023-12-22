@@ -42,7 +42,6 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
       Provider.of<FlickVideoManager>(context, listen: false);
 
   VideoSettingEnum settingEnum = VideoSettingEnum.quality;
-  SpeedEnum videoSpeed = SpeedEnum.normal;
   bool isSettings = false;
 
   @override
@@ -333,7 +332,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
               color: Colors.black,
             ),
           ),
-          trailing: FlickHelpers.speedList[index].values.first == videoSpeed
+          trailing: FlickHelpers.speedList[index].values.first ==
+                  videoManager.videoSpeed
               ? const Icon(Icons.check_rounded)
               : null,
           onTap: () async {
@@ -341,11 +341,14 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
 
             setState(() {
               isSettings = false;
-              videoSpeed = FlickHelpers.speedList[index].values.first;
+              videoManager.videoSpeed =
+                  FlickHelpers.speedList[index].values.first;
               controlManager.play();
             });
 
-            controlManager.setPlaybackSpeed(0.25);
+            controlManager.setPlaybackSpeed(
+              double.parse(FlickHelpers.speedList[index].keys.first),
+            );
           },
         );
       },

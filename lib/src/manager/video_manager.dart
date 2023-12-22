@@ -23,6 +23,7 @@ class FlickVideoManager extends ChangeNotifier {
   VideoPlayerController? _videoPlayerController;
   bool _mounted = true;
   QualityEnum quality = QualityEnum.hd;
+  SpeedEnum videoSpeed = SpeedEnum.normal;
 
   /// Auto-play the video after initialization.
   final bool autoPlay;

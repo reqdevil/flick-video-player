@@ -1,8 +1,7 @@
 library flick_manager;
 
 import 'dart:async';
-import 'package:flick_video_player/src/utils/flick_quality_enum.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 part 'video_manager.dart';

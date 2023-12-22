@@ -12,8 +12,6 @@ class FlickSeekVideoAction extends StatelessWidget {
     this.forwardSeekIcon = const Icon(Icons.fast_forward),
     this.backwardSeekIcon = const Icon(Icons.fast_rewind),
     this.duration = const Duration(seconds: 10),
-    this.seekForward,
-    this.seekBackward,
   }) : super(key: key);
 
   /// Widget to be stacked above this action.
@@ -29,22 +27,6 @@ class FlickSeekVideoAction extends StatelessWidget {
   /// This widget is shown for a duration managed by [FlickDisplayManager].
   final Widget backwardSeekIcon;
 
-  /// Function called onTap of [forwardSeekIcon].
-  ///
-  /// Default action -
-  /// ``` dart
-  ///    controlManager.seekForward(Duration(seconds: 10));
-  /// ```
-  final Function? seekForward;
-
-  /// Function called onTap of [backwardSeekIcon].
-  ///
-  /// Default action -
-  /// ``` dart
-  ///     controlManager.seekBackward(Duration(seconds: 10));
-  /// ```
-  final Function? seekBackward;
-
   /// Duration by which video will be seek.
   final Duration duration;
 
@@ -54,6 +36,7 @@ class FlickSeekVideoAction extends StatelessWidget {
         Provider.of<FlickDisplayManager>(context);
     FlickControlManager controlManager =
         Provider.of<FlickControlManager>(context);
+    FlickVideoManager videoManager = Provider.of<FlickVideoManager>(context);
 
     bool showForwardSeek = displayManager.showForwardSeek;
     bool showBackwardSeek = displayManager.showBackwardSeek;
@@ -66,11 +49,15 @@ class FlickSeekVideoAction extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onDoubleTap: () {
-                if (seekBackward != null) {
-                  seekBackward!();
-                } else {
-                  controlManager.seekBackward(duration);
-                }
+                final String newSpeed = FlickHelpers.speedList
+                    .where((element) =>
+                        element.values.first == videoManager.videoSpeed)
+                    .first
+                    .keys
+                    .first;
+
+                controlManager.setPlaybackSpeed(double.parse(newSpeed));
+                controlManager.seekBackward(duration);
               },
               child: Align(
                 alignment: Alignment.center,
@@ -95,11 +82,15 @@ class FlickSeekVideoAction extends StatelessWidget {
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
               onDoubleTap: () {
-                if (seekForward != null) {
-                  seekForward!();
-                } else {
-                  controlManager.seekForward(duration);
-                }
+                final String newSpeed = FlickHelpers.speedList
+                    .where((element) =>
+                        element.values.first == videoManager.videoSpeed)
+                    .first
+                    .keys
+                    .first;
+
+                controlManager.setPlaybackSpeed(double.parse(newSpeed));
+                controlManager.seekForward(duration);
               },
               child: Align(
                 alignment: Alignment.center,

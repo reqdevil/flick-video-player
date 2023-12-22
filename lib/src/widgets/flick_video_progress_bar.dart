@@ -34,6 +34,13 @@ class FlickVideoProgressBar extends StatelessWidget {
       final Offset tapPos = box.globalToLocal(globalPosition);
       final double relative = tapPos.dx / box.size.width;
       final Duration position = videoPlayerValue.duration * relative;
+      final String newSpeed = FlickHelpers.speedList
+          .where((element) => element.values.first == videoManager.videoSpeed)
+          .first
+          .keys
+          .first;
+
+      controlManager.setPlaybackSpeed(double.parse(newSpeed));
       controlManager.seekTo(position);
     }
 
