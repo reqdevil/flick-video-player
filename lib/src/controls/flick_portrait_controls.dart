@@ -95,18 +95,20 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         GestureDetector(
                           onTap: widget.popFunction,
                           child: Container(
-                            width: 0.0625.sw,
-                            height: 0.0625.sw,
+                            width: 20.w,
+                            height: 20.w,
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.7),
                               shape: BoxShape.circle,
                             ),
-                            child: Transform.rotate(
-                              angle: pi * 1.5,
-                              child: const Icon(
-                                Icons.chevron_left,
-                                color: Colors.white,
-                                size: 30,
+                            child: Center(
+                              child: Transform.rotate(
+                                angle: pi * 1.5,
+                                child: const Icon(
+                                  Icons.chevron_left,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
                               ),
                             ),
                           ),
@@ -121,16 +123,18 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           });
                         },
                         child: Container(
-                          width: 0.0625.sw,
-                          height: 0.0625.sw,
+                          width: 25.w,
+                          height: 25.w,
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
-                            Icons.settings,
-                            color: Colors.white,
-                            size: 20,
+                          child: Center(
+                            child: Icon(
+                              Icons.settings,
+                              color: Colors.white,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
