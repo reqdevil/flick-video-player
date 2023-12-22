@@ -45,12 +45,19 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   @override
   void initState() {
     super.initState();
-    FlickHelpers().unlockOrientations();
+
     WidgetsBinding.instance.addObserver(this);
+    FlickHelpers().unlockOrientations();
+
     flickManager = widget.flickManager;
     flickManager.registerContext(context);
     flickManager.flickControlManager!.addListener(listener);
+
     _setSystemUIOverlays();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('asdasdasd: $_isInitialized');
+    });
   }
 
   @override
@@ -81,6 +88,8 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       setState(() {
         _isInitialized = true;
       });
+
+      print('asdasd : $_isInitialized');
 
       return;
     }
