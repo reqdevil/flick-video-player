@@ -8,20 +8,8 @@ import 'package:provider/provider.dart';
 class FlickPortraitControls extends StatefulWidget {
   const FlickPortraitControls({
     Key? key,
-    this.iconSize = 20,
-    this.fontSize = 12,
     this.popFunction,
   }) : super(key: key);
-
-  /// Icon size.
-  ///
-  /// This size is used for all the player icons.
-  final double iconSize;
-
-  /// Font size.
-  ///
-  /// This size is used for all the text.
-  final double fontSize;
 
   final Function()? popFunction;
 
@@ -34,6 +22,9 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
       Provider.of<FlickControlManager>(context, listen: false);
   late FlickVideoManager videoManager =
       Provider.of<FlickVideoManager>(context, listen: false);
+
+  final double iconSize = 20;
+  final double fontSize = 12;
 
   VideoSettingEnum settingEnum = VideoSettingEnum.quality;
   bool isSettings = false;
@@ -144,26 +135,26 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                   Row(
                     children: <Widget>[
                       FlickCurrentPosition(
-                        fontSize: widget.fontSize,
+                        fontSize: fontSize,
                       ),
                       FlickAutoHideChild(
                         child: Text(
                           ' / ',
                           style: TextStyle(
                             fontFamily: 'Jost',
-                            fontSize: widget.fontSize,
+                            fontSize: fontSize,
                             color: Colors.white,
                           ),
                         ),
                       ),
                       FlickTotalDuration(
-                        fontSize: widget.fontSize,
+                        fontSize: fontSize,
                       ),
                       Expanded(
                         child: SizedBox(),
                       ),
                       FlickFullScreenToggle(
-                        size: widget.iconSize,
+                        size: iconSize,
                       ),
                     ],
                   ),

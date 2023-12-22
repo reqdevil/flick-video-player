@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 class FlickVideoPlayer extends StatefulWidget {
