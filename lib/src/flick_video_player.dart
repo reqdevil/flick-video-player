@@ -72,6 +72,21 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     return false;
   }
 
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+
+    if (mounted) {
+      final Size newSize = MediaQuery.of(context).size;
+
+      if (newSize.width > newSize.height) {
+        flickManager.flickControlManager!.enterFullscreen();
+      } else {
+        flickManager.flickControlManager!.exitFullscreen();
+      }
+    }
+  }
+
   // Listener on [FlickControlManager],
   // Pushes the full-screen if [FlickControlManager] is changed to full-screen.
   void listener() async {

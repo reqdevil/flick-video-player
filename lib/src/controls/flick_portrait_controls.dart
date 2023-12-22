@@ -19,9 +19,8 @@ class FlickPortraitControls extends StatefulWidget {
 
 class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   late FlickControlManager controlManager =
-      Provider.of<FlickControlManager>(context, listen: false);
-  late FlickVideoManager videoManager =
-      Provider.of<FlickVideoManager>(context, listen: false);
+      Provider.of<FlickControlManager>(context);
+  late FlickVideoManager videoManager = Provider.of<FlickVideoManager>(context);
 
   final double iconSize = 20;
   final double fontSize = 12;
