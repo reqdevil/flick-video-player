@@ -1,9 +1,6 @@
-import 'dart:async';
-
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sensors_plus/sensors_plus.dart';
 
 /// Show a widget based on the full-screen state of the player and toggle the same.
 class FlickFullScreenToggle extends StatelessWidget {
@@ -62,26 +59,7 @@ class FlickFullScreenToggle extends StatelessWidget {
 
     return GestureDetector(
       key: key,
-      onTap: () async {
-        print('fullscreen1' + controlManager.isFullscreen.toString());
-        controlManager.toggleFullscreen();
-        print('fullscreen2' + controlManager.isFullscreen.toString());
-
-        if (controlManager.isFullscreen) {
-          await FlickHelpers().lockOrientationToLandScape();
-        } else {
-          await FlickHelpers().lockOrientationToPortrait();
-
-          StreamSubscription? accelerometerSubscription;
-          accelerometerSubscription =
-              accelerometerEventStream().listen((event) {
-            if (event.y > 8) {
-              FlickHelpers().unlockOrientations();
-              accelerometerSubscription?.cancel();
-            }
-          });
-        }
-      },
+      onTap: () => controlManager.toggleFullscreen(),
       child: Container(
         padding: padding,
         decoration: decoration,
