@@ -56,6 +56,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     _setSystemUIOverlays();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      print('mounted: $mounted');
       print('asdasdasd: $_isInitialized');
     });
   }
@@ -87,6 +88,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
         _isInitialized = true;
       });
 
+      print('mounted: $mounted');
       print('asdasd : $_isInitialized');
 
       return;
