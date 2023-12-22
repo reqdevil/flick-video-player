@@ -26,18 +26,9 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: 'FlickVideoIcons'
-      fonts: 
-        - asset: assets/icons/VideoIcons.ttf
     - family: Jost
       fonts:
-        - asset: assets/fonts/jost/Jost-Regular.ttf
-        - asset: assets/fonts/jost/Jost-Bold.ttf
-          weight: 900
-        - asset: assets/fonts/jost/Jost-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/jost/Jost-Light.ttf
-          weight: 300
+        - asset: assets//Jost-Regular.ttf
 
 topics:
   - video-player

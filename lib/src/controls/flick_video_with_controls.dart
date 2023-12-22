@@ -33,14 +33,16 @@ class FlickVideoWithControls extends StatefulWidget {
       size: 20,
     ),
     this.textStyle = const TextStyle(
-      color: Colors.white,
+      fontFamily: 'Jost',
       fontSize: 12,
+      color: Colors.white,
     ),
     this.aspectRatioWhenLoading = 16 / 9,
     this.willVideoPlayerControllerChange = true,
     this.closedCaptionTextStyle = const TextStyle(
-      color: Colors.white,
+      fontFamily: 'Jost',
       fontSize: 12,
+      color: Colors.white,
     ),
   }) : super(key: key);
 

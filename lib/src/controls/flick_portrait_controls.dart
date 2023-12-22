@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:flick_video_player/src/utils/flick_video_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -102,7 +101,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
-                              FlickVideoIcons.chevron_down,
+                              Icons.expand_more,
                               color: Colors.white,
                               size: 30,
                             ),
@@ -125,7 +124,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           ),
                           child: Center(
                             child: Icon(
-                              FlickVideoIcons.cog,
+                              Icons.settings,
                               color: Colors.white,
                               size: 20,
                             ),
@@ -155,8 +154,9 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         child: Text(
                           ' / ',
                           style: TextStyle(
-                            color: Colors.white,
+                            fontFamily: 'Jost',
                             fontSize: widget.fontSize,
+                            color: Colors.white,
                           ),
                         ),
                       ),
