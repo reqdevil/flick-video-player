@@ -319,7 +319,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   }
 
   Widget speedSettings() {
-    return ListView(
+    return Column(
       children: List.generate(
         FlickHelpers.speedList.length,
         (index) => ListTile(
