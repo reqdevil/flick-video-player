@@ -170,7 +170,12 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                     ),
                   ),
                   if (controlManager.isFullscreen)
-                    SizedBox(height: MediaQuery.viewPaddingOf(context).top)
+                    SizedBox(height: MediaQuery.viewPaddingOf(context).top),
+                  if (controlManager.isFullscreen)
+                    Text(
+                      'asdsad',
+                      style: TextStyle(color: Colors.white),
+                    )
                 ],
               ),
             ),

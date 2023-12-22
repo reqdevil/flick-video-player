@@ -75,13 +75,17 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
+    print('metric');
 
     if (mounted) {
       final Size newSize = MediaQuery.of(context).size;
+      print('mounted');
 
       if (newSize.width > newSize.height) {
+        print('enter');
         flickManager.flickControlManager!.enterFullscreen();
       } else {
+        print('exit');
         flickManager.flickControlManager!.exitFullscreen();
       }
     }
