@@ -36,8 +36,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   Widget playBody() {
     double padding = MediaQuery.viewPaddingOf(context).left >
             MediaQuery.viewPaddingOf(context).right
-        ? MediaQuery.viewPaddingOf(context).left / 2
-        : MediaQuery.viewPaddingOf(context).right / 2;
+        ? MediaQuery.viewPaddingOf(context).left
+        : MediaQuery.viewPaddingOf(context).right;
 
     return Stack(
       children: <Widget>[
@@ -75,7 +75,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             child: Padding(
               padding: controlManager.isFullscreen
                   ? EdgeInsets.only(
-                      top: padding,
+                      top: padding / 2,
                       left: padding,
                       right: padding,
                     )
