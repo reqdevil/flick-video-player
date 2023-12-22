@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sensors_plus/sensors_plus.dart';
 
 /// Show a widget based on the full-screen state of the player and toggle the same.
 class FlickFullScreenToggle extends StatelessWidget {
@@ -66,6 +69,14 @@ class FlickFullScreenToggle extends StatelessWidget {
           FlickHelpers().lockOrientationToLandScape();
         } else {
           FlickHelpers().lockOrientationToPortrait();
+
+          StreamSubscription<AccelerometerEvent>? subscription;
+          subscription = accelerometerEventStream().listen((event) {
+            if (event.y > 7) {
+              FlickHelpers().unlockOrientations();
+              subscription?.cancel();
+            }
+          });
         }
       },
       child: Container(
