@@ -56,7 +56,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
         Positioned.fill(
           child: FlickAutoHideChild(
             child: Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withOpacity(0.4),
             ),
           ),
         ),
@@ -95,6 +95,23 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         GestureDetector(
                           onTap: widget.popFunction,
                           child: Container(
+                            width: 30.w,
+                            height: 30.w,
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.7),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.expand_more,
+                              color: Colors.white,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      if (!controlManager.isFullscreen)
+                        GestureDetector(
+                          onTap: widget.popFunction,
+                          child: Container(
                             padding: EdgeInsets.all(3.w),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.7),
@@ -117,7 +134,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           });
                         },
                         child: Container(
-                          padding: EdgeInsets.all(3.w),
+                          width: 30.w,
+                          height: 30.w,
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             shape: BoxShape.circle,
@@ -126,7 +144,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                             child: Icon(
                               Icons.settings,
                               color: Colors.white,
-                              size: 30,
+                              size: 20,
                             ),
                           ),
                         ),
