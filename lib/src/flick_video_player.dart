@@ -88,11 +88,11 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   // Pushes the full-screen if [FlickControlManager] is changed to full-screen.
   void listener() async {
     if (flickManager.flickControlManager!.isFullscreen && !_isFullscreen) {
-      print('listener full');
+      print('listener enter');
       _switchToFullscreen();
     } else if (_isFullscreen &&
         !flickManager.flickControlManager!.isFullscreen) {
-      print('listener normal');
+      print('listener exit');
       _exitFullscreen();
     }
   }

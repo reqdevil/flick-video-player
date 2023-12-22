@@ -60,6 +60,7 @@ class FlickFullScreenToggle extends StatelessWidget {
     return GestureDetector(
       key: key,
       onTap: () {
+        print('button toggle');
         controlManager.toggleFullscreen();
 
         if (controlManager.isFullscreen) {
