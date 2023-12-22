@@ -66,6 +66,10 @@ class FlickFullScreenToggle extends StatelessWidget {
           FlickHelpers().lockOrientationToLandScape();
         } else {
           FlickHelpers().lockOrientationToPortrait();
+
+          Future.delayed(Duration(milliseconds: 1500), () {
+            FlickHelpers().unlockOrientations();
+          });
         }
       },
       child: Container(

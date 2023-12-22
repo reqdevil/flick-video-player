@@ -69,6 +69,8 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
     WakelockPlus.disable();
 
+    FlickHelpers().lockOrientationToPortrait();
+
     WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
@@ -91,9 +93,9 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       final Size newSize = MediaQuery.of(context).size;
 
       if (newSize.width > newSize.height) {
-        print('landscape');
+        flickManager.flickControlManager!.enterFullscreen();
       } else {
-        print('portrait');
+        flickManager.flickControlManager!.exitFullscreen();
       }
     });
   }
