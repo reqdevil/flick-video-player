@@ -126,7 +126,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                             child: Icon(
                               Icons.settings,
                               color: Colors.white,
-                              size: 20,
+                              size: 30,
                             ),
                           ),
                         ),
