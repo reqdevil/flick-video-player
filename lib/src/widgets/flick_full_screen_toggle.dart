@@ -65,7 +65,7 @@ class FlickFullScreenToggle extends StatelessWidget {
         if (controlManager.isFullscreen) {
           FlickHelpers().lockOrientationToLandScape();
         } else {
-          FlickHelpers().unlockOrientations();
+          FlickHelpers().lockOrientationToPortrait();
         }
       },
       child: Container(
