@@ -63,9 +63,9 @@ class FlickFullScreenToggle extends StatelessWidget {
     return GestureDetector(
       key: key,
       onTap: () async {
-        print('1' + controlManager.isFullscreen.toString());
+        print('fullscreen1' + controlManager.isFullscreen.toString());
         controlManager.toggleFullscreen();
-        print('2' + controlManager.isFullscreen.toString());
+        print('fullscreen2' + controlManager.isFullscreen.toString());
 
         if (controlManager.isFullscreen) {
           await FlickHelpers().lockOrientationToLandScape();
