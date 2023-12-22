@@ -38,6 +38,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   late FlickManager flickManager;
   bool _isFullscreen = false;
   bool _isInitialized = false;
+  bool _isReallyInitialized = false;
   OverlayEntry? _overlayEntry;
 
   @override
@@ -58,7 +59,15 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    print('didChangeDependencies');
+    if (!_isInitialized) {
+      _isInitialized = true;
+      return;
+    }
+
+    if (!_isReallyInitialized) {
+      _isReallyInitialized = true;
+      return;
+    }
   }
 
   @override
@@ -83,13 +92,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   void didChangeMetrics() {
-    if (!_isInitialized) {
-      setState(() {
-        _isInitialized = true;
-      });
-
-      print('didChangeMetrics');
-
+    if (!_isReallyInitialized) {
       return;
     }
 
