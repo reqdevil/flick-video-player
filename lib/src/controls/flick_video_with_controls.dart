@@ -16,11 +16,6 @@ class FlickVideoWithControls extends StatefulWidget {
     Key? key,
     this.controls,
     this.videoFit = BoxFit.cover,
-    this.playerLoadingFallback = const Center(
-      child: CircularProgressIndicator(
-        color: Color.fromARGB(255, 205, 0, 14),
-      ),
-    ),
     this.playerErrorFallback = const Center(
       child: const Icon(
         Icons.error,
@@ -48,9 +43,6 @@ class FlickVideoWithControls extends StatefulWidget {
 
   /// Create custom controls or use any of these [FlickPortraitControls], [FlickLandscapeControls]
   final Widget? controls;
-
-  /// Conditionally rendered if player is not initialized.
-  final Widget playerLoadingFallback;
 
   /// Conditionally rendered if player is has errors.
   final Widget playerErrorFallback;
@@ -141,15 +133,20 @@ class _FlickVideoWithControlsState extends State<FlickVideoWithControls> {
                               child: Transform.scale(
                                 scale: 0.7,
                                 child: ClosedCaption(
-                                    textStyle: widget.closedCaptionTextStyle,
-                                    text: _videoPlayerController!
-                                        .value.caption.text),
+                                  textStyle: widget.closedCaptionTextStyle,
+                                  text: _videoPlayerController!
+                                      .value.caption.text,
+                                ),
                               ),
                             )
                           : SizedBox(),
                       if (_videoPlayerController?.value.hasError == false &&
                           _videoPlayerController?.value.isInitialized == false)
-                        widget.playerLoadingFallback,
+                        const Center(
+                          child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 205, 0, 14),
+                          ),
+                        ),
                       if (_videoPlayerController?.value.hasError == true)
                         widget.playerErrorFallback,
                       widget.controls ?? Container(),

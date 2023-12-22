@@ -81,9 +81,9 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       final Size newSize = MediaQuery.of(context).size;
 
       if (newSize.width > newSize.height) {
-        context.read<FlickControlManager>().enterFullscreen();
+        flickManager.flickControlManager!.enterFullscreen();
       } else {
-        context.read<FlickControlManager>().exitFullscreen();
+        flickManager.flickControlManager!.exitFullscreen();
       }
     }
   }
@@ -111,7 +111,13 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       return Scaffold(
         body: FlickManagerBuilder(
           flickManager: flickManager,
-          child: widget.flickVideoWithControls,
+          child: Container(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).viewPadding.top,
+              right: MediaQuery.of(context).viewPadding.top,
+            ),
+            child: widget.flickVideoWithControls,
+          ),
         ),
       );
     });
