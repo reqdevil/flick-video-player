@@ -76,13 +76,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   void didChangeMetrics() {
-    if (_isFirstCall) {
-      _isFirstCall = false;
-      return;
-    }
-
-    print(_isFirstCall.toString());
-
     final Size newSize = MediaQuery.of(context).size;
     final bool isPortrait = newSize.width > newSize.height;
 
