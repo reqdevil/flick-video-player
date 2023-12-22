@@ -37,6 +37,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     with WidgetsBindingObserver {
   late FlickManager flickManager;
   bool _isFullscreen = false;
+  bool _isInitialized = false;
   OverlayEntry? _overlayEntry;
   double? _videoWidth;
   double? _videoHeight;
@@ -75,6 +76,12 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
+
+    print('isInitialized: $_isInitialized');
+
+    if (!_isInitialized) {
+      return;
+    }
 
     final Size newSize = MediaQuery.of(context).size;
     final bool isPortrait = newSize.width > newSize.height;
@@ -141,6 +148,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   Widget build(BuildContext context) {
+    if (!_isInitialized) {
+      _isInitialized = true;
+    }
+
     return SizedBox(
       width: _videoWidth,
       height: _videoHeight,
