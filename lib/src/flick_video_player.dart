@@ -37,6 +37,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     with WidgetsBindingObserver {
   late FlickManager flickManager;
   bool _isFullscreen = false;
+  bool _isInitialized = false;
   OverlayEntry? _overlayEntry;
   double? _videoWidth;
   double? _videoHeight;
@@ -76,16 +77,21 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() {
     super.didChangeMetrics();
 
-    final Size newSize = MediaQuery.of(context).size;
-    final bool isPortrait = newSize.width > newSize.height;
+    if (_isInitialized) {
+      final Size newSize = MediaQuery.of(context).size;
+      final bool isPortrait = newSize.width > newSize.height;
 
-    print('isPortrait: $isPortrait');
-    print('isFullscreen: ${flickManager.flickControlManager!.isFullscreen}');
+      print('isPortrait: $isPortrait');
+      print('isFullscreen: ${flickManager.flickControlManager!.isFullscreen}');
 
-    if (isPortrait && flickManager.flickControlManager!.isFullscreen) {
-      flickManager.flickControlManager!.exitFullscreen();
-    } else if (!isPortrait && !flickManager.flickControlManager!.isFullscreen) {
-      flickManager.flickControlManager!.enterFullscreen();
+      if (isPortrait && flickManager.flickControlManager!.isFullscreen) {
+        flickManager.flickControlManager!.exitFullscreen();
+      } else if (!isPortrait &&
+          !flickManager.flickControlManager!.isFullscreen) {
+        flickManager.flickControlManager!.enterFullscreen();
+      }
+    } else {
+      _isInitialized = true;
     }
   }
 
