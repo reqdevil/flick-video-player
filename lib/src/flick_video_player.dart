@@ -60,12 +60,17 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     super.didChangeDependencies();
 
     if (!_isInitialized) {
-      _isInitialized = true;
+      setState(() {
+        _isInitialized = true;
+      });
       return;
     }
 
-    if (!_isReallyInitialized) {
-      _isReallyInitialized = true;
+    if (_isInitialized && !_isReallyInitialized) {
+      print('Houston we have a problem');
+      setState(() {
+        _isReallyInitialized = true;
+      });
       return;
     }
   }
