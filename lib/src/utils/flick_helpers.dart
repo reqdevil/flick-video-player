@@ -43,7 +43,7 @@ class FlickHelpers {
     ]);
   }
 
-  Future<bool> getSingleAccelerometerEventYValue() async {
+  Future<bool> getIsPortraitByAccelerometer() async {
     Completer<bool> completer = Completer();
     StreamSubscription<AccelerometerEvent>? subscription;
 
