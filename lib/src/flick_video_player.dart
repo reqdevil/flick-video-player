@@ -37,8 +37,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     with WidgetsBindingObserver {
   late FlickManager flickManager;
   bool _isFullscreen = false;
-  bool _isInitialized = false;
-  bool _isReallyInitialized = false;
+  bool _isFirstCall = true;
   OverlayEntry? _overlayEntry;
 
   @override
@@ -53,29 +52,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     flickManager.flickControlManager!.addListener(listener);
 
     _setSystemUIOverlays();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    print(_isInitialized);
-
-    if (!_isInitialized) {
-      print('isInit became true');
-      setState(() {
-        _isInitialized = true;
-      });
-      return;
-    }
-
-    if (_isInitialized && !_isReallyInitialized) {
-      print('isReallyInit became true');
-      setState(() {
-        _isReallyInitialized = true;
-      });
-      return;
-    }
   }
 
   @override
@@ -100,9 +76,12 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   void didChangeMetrics() {
-    if (!_isReallyInitialized) {
+    if (_isFirstCall) {
+      _isFirstCall = false;
       return;
     }
+
+    print(_isFirstCall.toString());
 
     final Size newSize = MediaQuery.of(context).size;
     final bool isPortrait = newSize.width > newSize.height;
