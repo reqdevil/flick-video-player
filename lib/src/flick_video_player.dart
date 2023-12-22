@@ -79,21 +79,18 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
     print('isInitialized: $_isInitialized');
 
-    if (_isInitialized) {
-      final Size newSize = MediaQuery.of(context).size;
-      final bool isPortrait = newSize.width > newSize.height;
-
-      print('isPortrait: $isPortrait');
-      print('isFullscreen: ${flickManager.flickControlManager!.isFullscreen}');
-
-      if (isPortrait && flickManager.flickControlManager!.isFullscreen) {
-        flickManager.flickControlManager!.exitFullscreen();
-      } else if (!isPortrait &&
-          !flickManager.flickControlManager!.isFullscreen) {
-        flickManager.flickControlManager!.enterFullscreen();
-      }
-    } else {
+    if (!_isInitialized) {
       _isInitialized = true;
+      return;
+    }
+
+    final Size newSize = MediaQuery.of(context).size;
+    final bool isPortrait = newSize.width > newSize.height;
+
+    if (isPortrait && flickManager.flickControlManager!.isFullscreen) {
+      flickManager.flickControlManager!.exitFullscreen();
+    } else if (!isPortrait && !flickManager.flickControlManager!.isFullscreen) {
+      flickManager.flickControlManager!.enterFullscreen();
     }
   }
 
