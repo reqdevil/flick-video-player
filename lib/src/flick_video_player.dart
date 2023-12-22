@@ -78,6 +78,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
     if (isPortrait && _isFullscreen) {
+      print('change exit');
       flickManager.flickControlManager!.exitFullscreen();
     } else if (!isPortrait && !_isFullscreen) {
       flickManager.flickControlManager!.enterFullscreen();
