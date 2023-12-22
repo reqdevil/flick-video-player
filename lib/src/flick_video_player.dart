@@ -77,9 +77,11 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() {
     super.didChangeMetrics();
 
-    print('isInitialized: $_isInitialized');
-
     if (!_isInitialized) {
+      setState(() {
+        _isInitialized = true;
+      });
+
       return;
     }
 
@@ -148,10 +150,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   Widget build(BuildContext context) {
-    if (!_isInitialized) {
-      _isInitialized = true;
-    }
-
     return SizedBox(
       width: _videoWidth,
       height: _videoHeight,
