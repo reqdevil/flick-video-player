@@ -12,7 +12,6 @@ class FlickPortraitControls extends StatefulWidget {
     Key? key,
     this.iconSize = 20,
     this.fontSize = 12,
-    this.progressBarSettings,
     this.popFunction,
   }) : super(key: key);
 
@@ -25,9 +24,6 @@ class FlickPortraitControls extends StatefulWidget {
   ///
   /// This size is used for all the text.
   final double fontSize;
-
-  /// [FlickProgressBarSettings] settings.
-  final FlickProgressBarSettings? progressBarSettings;
 
   final Function()? popFunction;
 
@@ -173,7 +169,11 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                     ],
                   ),
                   FlickVideoProgressBar(
-                    flickProgressBarSettings: widget.progressBarSettings,
+                    flickProgressBarSettings: FlickProgressBarSettings(
+                      playedColor: Color.fromARGB(255, 205, 0, 14),
+                      handleColor: Color.fromARGB(255, 205, 0, 14),
+                      handleRadius: 5,
+                    ),
                   ),
                 ],
               ),
