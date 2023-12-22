@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:flick_video_player/src/utils/icons/flick_video_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -95,21 +96,15 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         GestureDetector(
                           onTap: widget.popFunction,
                           child: Container(
-                            width: 20.w,
-                            height: 20.w,
+                            padding: EdgeInsets.all(3.w),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.7),
                               shape: BoxShape.circle,
                             ),
-                            child: Center(
-                              child: Transform.rotate(
-                                angle: pi * 1.5,
-                                child: const Icon(
-                                  Icons.chevron_left,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                              ),
+                            child: const Icon(
+                              FlickVideoIcons.chevron_down,
+                              color: Colors.white,
+                              size: 30,
                             ),
                           ),
                         ),
@@ -123,15 +118,14 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                           });
                         },
                         child: Container(
-                          width: 25.w,
-                          height: 25.w,
+                          padding: EdgeInsets.all(3.w),
                           decoration: BoxDecoration(
                             color: Colors.black.withOpacity(0.7),
                             shape: BoxShape.circle,
                           ),
                           child: Center(
                             child: Icon(
-                              Icons.settings,
+                              FlickVideoIcons.cog,
                               color: Colors.white,
                               size: 20,
                             ),

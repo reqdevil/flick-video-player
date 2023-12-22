@@ -25,5 +25,10 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  fonts:
+    - family: FlickVideoIcons
+      fonts:
+        - asset: lib/src/utils/icons/VideoIcons.tff
+
 topics:
   - video-player
