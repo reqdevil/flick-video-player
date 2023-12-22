@@ -77,6 +77,8 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() {
     super.didChangeMetrics();
 
+    print('isInitialized: $_isInitialized');
+
     if (_isInitialized) {
       final Size newSize = MediaQuery.of(context).size;
       final bool isPortrait = newSize.width > newSize.height;
@@ -113,7 +115,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
     _isFullscreen = true;
     _setSystemUIOverlays();
-    FlickHelpers().lockOrientationToLandScape();
 
     _overlayEntry = OverlayEntry(builder: (context) {
       return Scaffold(
@@ -137,7 +138,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     _overlayEntry = null;
 
     _setSystemUIOverlays();
-    FlickHelpers().lockOrientationToPortrait();
   }
 
   _setSystemUIOverlays() {
