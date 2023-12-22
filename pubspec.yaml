@@ -17,6 +17,7 @@ dependencies:
   wakelock_plus: ^1.1.4
   path_provider: ^2.1.1
   flutter_screenutil: ^5.9.0
+  sensors_plus: ^4.0.2
 
 dev_dependencies:
   flutter_test:

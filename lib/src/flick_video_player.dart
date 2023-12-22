@@ -1,9 +1,9 @@
+import 'dart:async';
+
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-
-// TODO: Circular mor
 
 class FlickVideoPlayer extends StatefulWidget {
   const FlickVideoPlayer({

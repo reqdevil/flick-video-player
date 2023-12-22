@@ -4,8 +4,6 @@ import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-// TODO: BUTON YERLERI YANLIS
-
 /// Default portrait controls.
 class FlickPortraitControls extends StatefulWidget {
   const FlickPortraitControls({
@@ -285,6 +283,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
 
   Widget qualitySettings() {
     return ListView.builder(
+      padding: EdgeInsets.zero,
       itemCount: FlickHelpers.qualityList.length,
       itemBuilder: (context, index) {
         return ListTile(
