@@ -1,11 +1,10 @@
 import 'dart:math';
-import 'package:flick_video_player/src/utils/flick_quality_enum.dart';
-import 'package:flick_video_player/src/utils/flick_setting_enum.dart';
-import 'package:flick_video_player/src/utils/flick_speed_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+// TODO: BUTON YERLERI YANLIS
 
 /// Default portrait controls.
 class FlickPortraitControls extends StatefulWidget {
@@ -37,23 +36,6 @@ class FlickPortraitControls extends StatefulWidget {
 }
 
 class _FlickPortraitControlsState extends State<FlickPortraitControls> {
-  final List<Map<String, SpeedEnum>> speedList = [
-    {'0.25': SpeedEnum.quarter},
-    {'0.50': SpeedEnum.half},
-    {'0.75': SpeedEnum.threeQuarters},
-    {'1.00': SpeedEnum.normal},
-    {'1.25': SpeedEnum.oneQuarter},
-    {'1.50': SpeedEnum.oneHalf},
-    {'1.75': SpeedEnum.oneThreeQuarters},
-    {'2.00': SpeedEnum.double},
-  ];
-
-  final List<Map<String, QualityEnum>> qualityList = [
-    {'360p': QualityEnum.sd},
-    {'720p': QualityEnum.hd},
-    {'1080p': QualityEnum.uhd}
-  ];
-
   late FlickControlManager controlManager =
       Provider.of<FlickControlManager>(context, listen: false);
   late FlickVideoManager videoManager =
@@ -91,7 +73,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: Colors.black.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(40),
+                        shape: BoxShape.circle,
                       ),
                     ),
                   ),
@@ -112,13 +94,15 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       if (!controlManager.isFullscreen)
                         GestureDetector(
                           onTap: widget.popFunction,
-                          child: CircleAvatar(
-                            backgroundColor: Color.fromARGB(255, 205, 0, 14),
-                            radius: 15,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.7),
+                              shape: BoxShape.circle,
+                            ),
                             child: Transform.rotate(
                               angle: pi * 1.5,
                               child: const Icon(
-                                Icons.arrow_back_ios_new,
+                                Icons.chevron_left,
                                 color: Colors.white,
                                 size: 18,
                               ),
@@ -134,9 +118,11 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                             isSettings = true;
                           });
                         },
-                        child: const CircleAvatar(
-                          backgroundColor: Color.fromARGB(255, 205, 0, 14),
-                          radius: 15,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.7),
+                            shape: BoxShape.circle,
+                          ),
                           child: Icon(
                             Icons.settings,
                             color: Colors.white,
@@ -233,7 +219,6 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           ListTile(
-                            splashColor: Color.fromARGB(255, 80, 80, 80),
                             onTap: () {
                               setState(() {
                                 settingEnum = VideoSettingEnum.quality;
@@ -256,7 +241,6 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                                 : null,
                           ),
                           ListTile(
-                            splashColor: Color.fromARGB(255, 80, 80, 80),
                             onTap: () {
                               setState(() {
                                 settingEnum = VideoSettingEnum.speed;
@@ -282,11 +266,9 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       ),
                     ),
                     Expanded(
-                      child: Container(
-                        child: settingEnum == VideoSettingEnum.quality
-                            ? qualitySettings()
-                            : speedSettings(),
-                      ),
+                      child: settingEnum == VideoSettingEnum.quality
+                          ? qualitySettings()
+                          : speedSettings(),
                     ),
                   ],
                 ),
@@ -300,11 +282,11 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
 
   Widget qualitySettings() {
     return ListView.builder(
-      itemCount: qualityList.length,
+      itemCount: FlickHelpers.qualityList.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            qualityList[index].keys.first,
+            FlickHelpers.qualityList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
               fontSize: 18.sp,
@@ -312,14 +294,17 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
               color: Colors.black,
             ),
           ),
-          trailing: videoManager.quality == qualityList[index].values.first
+          trailing: videoManager.quality ==
+                  FlickHelpers.qualityList[index].values.first
               ? const Icon(Icons.check_rounded)
               : null,
           onTap: () {
-            if (videoManager.quality != qualityList[index].values.first) {
+            if (videoManager.quality !=
+                FlickHelpers.qualityList[index].values.first) {
               setState(() {
                 isSettings = false;
-                videoManager.quality = qualityList[index].values.first;
+                videoManager.quality =
+                    FlickHelpers.qualityList[index].values.first;
               });
 
               videoManager.changeVideoQuality();
@@ -332,11 +317,11 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
 
   Widget speedSettings() {
     return ListView.builder(
-      itemCount: speedList.length,
+      itemCount: FlickHelpers.speedList.length,
       itemBuilder: (context, index) {
         return ListTile(
           title: Text(
-            speedList[index].keys.first,
+            FlickHelpers.speedList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
               fontSize: 18.sp,
@@ -344,7 +329,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
               color: Colors.black,
             ),
           ),
-          trailing: speedList[index].values.first == videoSpeed
+          trailing: FlickHelpers.speedList[index].values.first == videoSpeed
               ? const Icon(Icons.check_rounded)
               : null,
           onTap: () async {
@@ -352,7 +337,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
 
             setState(() {
               isSettings = false;
-              videoSpeed = SpeedEnum.quarter;
+              videoSpeed = FlickHelpers.speedList[index].values.first;
               controlManager.play();
             });
 

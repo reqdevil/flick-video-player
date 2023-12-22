@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 class FlickAutoPlayCircularProgress extends StatefulWidget {
   const FlickAutoPlayCircularProgress({
     Key? key,
-    this.colors,
     this.width = 50,
     this.height = 50,
     this.playChild = const Icon(
@@ -21,9 +20,6 @@ class FlickAutoPlayCircularProgress extends StatefulWidget {
     this.playNextVideo,
     this.cancelAutoPlayTimer,
   }) : super(key: key);
-
-  /// Colors for progress indicator.
-  final FlickAutoPlayTimerProgressColors? colors;
 
   /// Width of the progress indicator.
   final double width;
@@ -77,7 +73,9 @@ class _FlickAutoPlayCircularProgressState
     if (_videoManager == null) {
       _videoManager = Provider.of<FlickVideoManager>(context);
       controller = AnimationController(
-          vsync: this, duration: _videoManager!.nextVideoAutoPlayDuration);
+        vsync: this,
+        duration: _videoManager!.nextVideoAutoPlayDuration,
+      );
       controller!.forward();
     }
     super.didChangeDependencies();
@@ -98,7 +96,6 @@ class _FlickAutoPlayCircularProgressState
                   child: CustomPaint(
                     painter: FlickAutoPlayTimerProgressPainter(
                       animation: controller,
-                      colors: widget.colors,
                     ),
                     child: Container(
                       child: GestureDetector(

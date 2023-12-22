@@ -1,10 +1,9 @@
-import 'package:flick_video_player/src/utils/web_key_bindings.dart';
-import 'package:universal_html/html.dart';
 import 'package:flick_video_player/flick_video_player.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+
+// TODO: Circular mor
 
 class FlickVideoPlayer extends StatefulWidget {
   const FlickVideoPlayer({
@@ -13,27 +12,19 @@ class FlickVideoPlayer extends StatefulWidget {
     this.flickVideoWithControls = const FlickVideoWithControls(
       controls: const FlickPortraitControls(),
     ),
-    this.flickVideoWithControlsFullscreen,
     this.systemUIOverlay = SystemUiOverlay.values,
     this.systemUIOverlayFullscreen = const [],
     this.preferredDeviceOrientation = const [
       DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ],
-    this.preferredDeviceOrientationFullscreen = const [
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight
     ],
-    this.webKeyDownHandler = flickDefaultWebKeyDownHandler,
   }) : super(key: key);
 
   final FlickManager flickManager;
 
   /// Widget to render video and controls.
   final Widget flickVideoWithControls;
-
-  /// Widget to render video and controls in full-screen.
-  final Widget? flickVideoWithControlsFullscreen;
 
   /// SystemUIOverlay to show.
   ///
@@ -47,12 +38,6 @@ class FlickVideoPlayer extends StatefulWidget {
   ///
   /// Use [preferredDeviceOrientationFullscreen] to manage orientation for full-screen.
   final List<DeviceOrientation> preferredDeviceOrientation;
-
-  /// Preferred device orientation in full-screen.
-  final List<DeviceOrientation> preferredDeviceOrientationFullscreen;
-
-  /// Callback called on keyDown for web, used for keyboard shortcuts.
-  final Function(KeyboardEvent, FlickManager) webKeyDownHandler;
 
   @override
   _FlickVideoPlayerState createState() => _FlickVideoPlayerState();
@@ -73,13 +58,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     flickManager.registerContext(context);
     flickManager.flickControlManager!.addListener(listener);
     _setSystemUIOverlays();
-    _setPreferredOrientation();
-
-    if (kIsWeb) {
-      document.documentElement?.onFullscreenChange
-          .listen(_webFullscreenListener);
-      document.documentElement?.onKeyDown.listen(_webKeyListener);
-    }
+    FlickHelpers().unlockOrientations();
 
     super.initState();
   }
@@ -117,32 +96,28 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   _switchToFullscreen() async {
     /// Disable previous wakelock setting.
-    await WakelockPlus.enable();
     await WakelockPlus.disable();
+    await WakelockPlus.enable();
 
     _isFullscreen = true;
-    _setPreferredOrientation();
     _setSystemUIOverlays();
-    if (kIsWeb) {
-      document.documentElement?.requestFullscreen();
-      Future.delayed(Duration(milliseconds: 100), () {
-        _videoHeight = MediaQuery.of(context).size.height;
-        _videoWidth = MediaQuery.of(context).size.width;
-        setState(() {});
-      });
-    } else {
-      _overlayEntry = OverlayEntry(builder: (context) {
-        return Scaffold(
-          body: FlickManagerBuilder(
-            flickManager: flickManager,
-            child: widget.flickVideoWithControlsFullscreen ??
-                widget.flickVideoWithControls,
-          ),
-        );
-      });
 
-      Overlay.of(context).insert(_overlayEntry!);
-    }
+    _overlayEntry = OverlayEntry(builder: (context) {
+      return Scaffold(
+        body: FlickManagerBuilder(
+          flickManager: flickManager,
+          child: Container(
+            margin: EdgeInsets.only(
+              left: MediaQuery.of(context).viewPadding.top,
+              right: MediaQuery.of(context).viewPadding.bottom,
+            ),
+            child: widget.flickVideoWithControls,
+          ),
+        ),
+      );
+    });
+
+    Overlay.of(context).insert(_overlayEntry!);
   }
 
   _exitFullscreen() async {
@@ -151,30 +126,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     await WakelockPlus.enable();
 
     _isFullscreen = false;
+    _overlayEntry?.remove();
+    _overlayEntry = null;
 
-    if (kIsWeb) {
-      document.exitFullscreen();
-      _videoHeight = null;
-      _videoWidth = null;
-      setState(() {});
-    } else {
-      _overlayEntry?.remove();
-      _overlayEntry = null;
-    }
-    _setPreferredOrientation();
     _setSystemUIOverlays();
-  }
-
-  _setPreferredOrientation() {
-    // when aspect ratio is less than 1 , video will be played in portrait mode and orientation will not be changed.
-    var aspectRatio =
-        widget.flickManager.flickVideoManager!.videoPlayerValue!.aspectRatio;
-    if (_isFullscreen && aspectRatio >= 1) {
-      SystemChrome.setPreferredOrientations(
-          widget.preferredDeviceOrientationFullscreen);
-    } else {
-      SystemChrome.setPreferredOrientations(widget.preferredDeviceOrientation);
-    }
   }
 
   _setSystemUIOverlays() {
@@ -185,20 +140,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
           overlays: widget.systemUIOverlay);
     }
-  }
-
-  void _webFullscreenListener(Event event) {
-    final isFullscreen = (window.screenTop == 0 && window.screenY == 0);
-    if (isFullscreen && !flickManager.flickControlManager!.isFullscreen) {
-      flickManager.flickControlManager!.enterFullscreen();
-    } else if (!isFullscreen &&
-        flickManager.flickControlManager!.isFullscreen) {
-      flickManager.flickControlManager!.exitFullscreen();
-    }
-  }
-
-  void _webKeyListener(KeyboardEvent event) {
-    widget.webKeyDownHandler(event, flickManager);
   }
 
   @override

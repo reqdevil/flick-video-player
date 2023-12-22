@@ -174,9 +174,6 @@ class FlickControlManager extends ChangeNotifier {
   /// different ranges for speed values. The [speed] must be greater than 0.
   ///
   /// The values will be handled as follows:
-  /// * On web, the audio will be muted at some speed when the browser
-  ///   determines that the sound would not be useful anymore. For example,
-  ///   "Gecko mutes the sound outside the range `0.25` to `5.0`" (see https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/playbackRate).
   /// * On Android, some very extreme speeds will not be played back accurately.
   ///   Instead, your video will still be played back, but the speed will be
   ///   clamped by ExoPlayer (but the values are allowed by the player, like on

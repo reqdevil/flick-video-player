@@ -8,7 +8,6 @@ class FlickFullScreenToggle extends StatelessWidget {
       {Key? key,
       this.enterFullScreenChild,
       this.exitFullScreenChild,
-      this.toggleFullscreen,
       this.size,
       this.color,
       this.padding,
@@ -24,14 +23,6 @@ class FlickFullScreenToggle extends StatelessWidget {
   ///
   ///  Default - [Icon(Icons.fullscreen_exit)]
   final Widget? exitFullScreenChild;
-
-  /// Function called onTap of the visible child.
-  ///
-  /// Default action -
-  /// ```dart
-  ///     controlManager.toggleFullscreen();
-  /// ```
-  final Function? toggleFullscreen;
 
   /// Size for the default icons.
   final double? size;
@@ -69,10 +60,12 @@ class FlickFullScreenToggle extends StatelessWidget {
     return GestureDetector(
       key: key,
       onTap: () {
-        if (toggleFullscreen != null) {
-          toggleFullscreen!();
+        controlManager.toggleFullscreen();
+
+        if (controlManager.isFullscreen) {
+          FlickHelpers().lockOrientationToLandScape();
         } else {
-          controlManager.toggleFullscreen();
+          FlickHelpers().unlockOrientations();
         }
       },
       child: Container(

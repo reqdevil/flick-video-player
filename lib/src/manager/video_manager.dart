@@ -102,54 +102,12 @@ class FlickVideoManager extends ChangeNotifier {
           'https://d3fziriexmtqet.cloudfront.net/video/$path/${path}_1080p.mp4';
     }
 
-    //  Change the videoPlayerController with the new controller,
-    VideoPlayerController? oldController = videoPlayerController;
-    _flickManager.flickControlManager!.pause();
-    _videoPlayerController = VideoPlayerController.networkUrl(
+    VideoPlayerController newController = VideoPlayerController.networkUrl(
       Uri.parse(newUrl),
     );
+    int oldMillisecond = videoPlayerController!.value.position.inMilliseconds;
 
-    int oldMillisecond = oldController!.value.position.inMilliseconds;
-
-    // notify the controller change and remove listeners from the old controller.
-    oldController.removeListener(_videoListener);
-    videoPlayerController!.addListener(_videoListener);
-
-    // Video listener is called once video starts playing,
-    // to reset the player UI immediately videoPlayerValue has to be changed here.
-    _videoPlayerValue = videoPlayerController!.value;
-    _currentVideoEnded = false;
-    _notify();
-
-    // Dispose the old controller after 5 seconds.
-    Future.delayed(const Duration(seconds: 5), () => oldController.dispose());
-
-    // Initialize the video if not initialized
-    // (User can initialize the video while passing to flick).
-    if (!videoPlayerController!.value.isInitialized && autoInitialize) {
-      try {
-        await videoPlayerController!.initialize();
-      } catch (err) {
-        _flickManager._handleErrorInVideo();
-      }
-    }
-
-    // If movie already ended, restart the movie (Happens when previously used controller is
-    // used again).
-    if (videoPlayerController!.value.position ==
-        videoPlayerController!.value.duration) {
-      videoPlayerController!.seekTo(
-          const Duration(hours: 0, minutes: 0, seconds: 0, milliseconds: 0));
-    } else {
-      videoPlayerController!.seekTo(Duration(milliseconds: oldMillisecond));
-    }
-
-    if (autoPlay && ModalRoute.of(_flickManager._context!)!.isCurrent) {
-      // Start playing the video.
-      _flickManager.flickControlManager!.play();
-    }
-
-    _notify();
+    _changeVideo(newController, oldMillisecond: oldMillisecond);
   }
 
   _handleChangeVideo(VideoPlayerController newController,
@@ -177,7 +135,10 @@ class FlickVideoManager extends ChangeNotifier {
   }
 
   // Immediately change the video.
-  _changeVideo(VideoPlayerController newController) async {
+  _changeVideo(
+    VideoPlayerController newController, {
+    int? oldMillisecond,
+  }) async {
     //  Change the videoPlayerController with the new controller,
     // notify the controller change and remove listeners from the old controller.
     VideoPlayerController? oldController = videoPlayerController;
@@ -206,18 +167,15 @@ class FlickVideoManager extends ChangeNotifier {
 
     // If movie already ended, restart the movie (Happens when previously used controller is
     // used again).
-    if (videoPlayerController!.value.position ==
+    if (oldMillisecond != null) {
+      videoPlayerController!.seekTo(Duration(milliseconds: oldMillisecond));
+    } else if (videoPlayerController!.value.position ==
         videoPlayerController!.value.duration) {
       videoPlayerController!
           .seekTo(Duration(hours: 0, minutes: 0, seconds: 0, milliseconds: 0));
     }
 
     if (autoPlay && ModalRoute.of(_flickManager._context!)!.isCurrent) {
-      //Chrome's autoplay policies are simple:
-      //Muted autoplay is always allowed.
-      if (kIsWeb) _flickManager.flickControlManager!.mute();
-      // if (kIsWeb) _flickManager.flickControlManager!.setVolume(0.5);
-
       // Start playing the video.
       _flickManager.flickControlManager!.play();
     }
