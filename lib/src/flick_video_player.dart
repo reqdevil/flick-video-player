@@ -39,8 +39,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   bool _isFullscreen = false;
   bool _isInitialized = false;
   OverlayEntry? _overlayEntry;
-  double? _videoWidth;
-  double? _videoHeight;
 
   @override
   void initState() {
@@ -54,11 +52,13 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     flickManager.flickControlManager!.addListener(listener);
 
     _setSystemUIOverlays();
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      print('mounted: $mounted');
-      print('asdasdasd: $_isInitialized');
-    });
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    print('didChangeDependencies');
   }
 
   @override
@@ -88,8 +88,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
         _isInitialized = true;
       });
 
-      print('mounted: $mounted');
-      print('asdasd : $_isInitialized');
+      print('didChangeMetrics');
 
       return;
     }
@@ -159,13 +158,9 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: _videoWidth,
-      height: _videoHeight,
-      child: FlickManagerBuilder(
-        flickManager: flickManager,
-        child: widget.flickVideoWithControls,
-      ),
+    return FlickManagerBuilder(
+      flickManager: flickManager,
+      child: widget.flickVideoWithControls,
     );
   }
 }
