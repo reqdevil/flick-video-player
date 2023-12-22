@@ -72,24 +72,22 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     return false;
   }
 
-  // @override
-  // void didChangeMetrics() {
-  //   super.didChangeMetrics();
-  //   print('metric');
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
 
-  //   if (mounted) {
-  //     final Size newSize = MediaQuery.of(context).size;
-  //     print('mounted');
+    final Size newSize = MediaQuery.of(context).size;
 
-  //     if (newSize.width > newSize.height) {
-  //       print('enter');
-  //       flickManager.flickControlManager!.enterFullscreen();
-  //     } else {
-  //       print('exit');
-  //       flickManager.flickControlManager!.exitFullscreen();
-  //     }
-  //   }
-  // }
+    if (newSize.width > newSize.height &&
+        !flickManager.flickControlManager!.isFullscreen &&
+        !_isFullscreen) {
+      flickManager.flickControlManager!.enterFullscreen();
+    } else if (newSize.width < newSize.height &&
+        _isFullscreen &&
+        flickManager.flickControlManager!.isFullscreen) {
+      flickManager.flickControlManager!.exitFullscreen();
+    }
+  }
 
   // Listener on [FlickControlManager],
   // Pushes the full-screen if [FlickControlManager] is changed to full-screen.

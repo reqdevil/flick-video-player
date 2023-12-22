@@ -100,30 +100,15 @@ class _FlickVideoWithControlsState extends State<FlickVideoWithControls> {
                       if (_videoPlayerController?.value.hasError == true)
                         Center(
                           child: Container(
-                            color: Colors.white,
                             padding: EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.7),
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.error,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
-                                // TODO: Remove before release
-                                Text(
-                                  _videoPlayerController!
-                                      .value.errorDescription!,
-                                  style: const TextStyle(
-                                    fontFamily: 'Jost',
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              ],
+                            child: Icon(
+                              Icons.error,
+                              color: Colors.white,
+                              size: 30,
                             ),
                           ),
                         ),
