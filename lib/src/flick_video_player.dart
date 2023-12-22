@@ -111,13 +111,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       return Scaffold(
         body: FlickManagerBuilder(
           flickManager: flickManager,
-          child: Container(
-            margin: EdgeInsets.only(
-              left: MediaQuery.of(context).viewPadding.top,
-              right: MediaQuery.of(context).viewPadding.bottom,
-            ),
-            child: widget.flickVideoWithControls,
-          ),
+          child: widget.flickVideoWithControls,
         ),
       );
     });

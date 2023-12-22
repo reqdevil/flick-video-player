@@ -84,7 +84,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                 children: [
                   Row(
                     children: [
-                      if (!controlManager.isFullscreen)
+                      if (widget.popFunction != null &&
+                          !controlManager.isFullscreen)
                         GestureDetector(
                           onTap: widget.popFunction,
                           child: Container(
