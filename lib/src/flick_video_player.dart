@@ -60,6 +60,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     super.didChangeDependencies();
 
     if (!_isInitialized) {
+      print('isInit became true');
       setState(() {
         _isInitialized = true;
       });
@@ -67,7 +68,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     }
 
     if (_isInitialized && !_isReallyInitialized) {
-      print('Houston we have a problem');
+      print('isReallyInit became true');
       setState(() {
         _isReallyInitialized = true;
       });
@@ -97,8 +98,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   void didChangeMetrics() {
-    print(_isReallyInitialized.toString());
-
     if (!_isReallyInitialized) {
       return;
     }
