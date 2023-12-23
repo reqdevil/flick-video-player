@@ -77,8 +77,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() async {
     bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
-    print('button: ${flickManager.flickControlManager!.isButton}');
-
     if (!flickManager.flickControlManager!.isButton) {
       if (isPortrait && _isFullscreen) {
         flickManager.flickControlManager!.exitFullscreen();
