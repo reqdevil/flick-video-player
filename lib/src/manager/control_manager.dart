@@ -37,9 +37,8 @@ class FlickControlManager extends ChangeNotifier {
   }
 
   /// Enter full-screen.
-  void enterFullscreen({bool isButton = false}) {
+  void enterFullscreen() {
     _isFullscreen = true;
-    _isButton = isButton;
     _flickManager._handleToggleFullscreen();
     _notify();
   }
@@ -57,7 +56,7 @@ class FlickControlManager extends ChangeNotifier {
     if (_isFullscreen) {
       exitFullscreen(isButton: true);
     } else {
-      enterFullscreen(isButton: true);
+      enterFullscreen();
     }
   }
 
