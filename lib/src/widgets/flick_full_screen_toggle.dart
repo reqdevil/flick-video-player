@@ -74,6 +74,7 @@ class FlickFullScreenToggle extends StatelessWidget {
           subscription = accelerometerEventStream().listen((event) {
             if (event.y > 7) {
               FlickHelpers().unlockOrientations();
+              controlManager.resetIsButton();
               subscription?.cancel();
             }
           });

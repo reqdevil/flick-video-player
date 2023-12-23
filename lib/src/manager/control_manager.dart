@@ -30,6 +30,12 @@ class FlickControlManager extends ChangeNotifier {
       _flickManager.flickVideoManager!.videoPlayerController;
   bool get _isPlaying => _flickManager.flickVideoManager!.isPlaying;
 
+  /// Change isButton to false to open didChangeMetric
+  void resetIsButton() {
+    _isButton = false;
+    _notify();
+  }
+
   /// Enter full-screen.
   void enterFullscreen({bool isButton = false}) {
     _isFullscreen = true;
