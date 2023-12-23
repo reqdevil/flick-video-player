@@ -14,10 +14,14 @@ class FlickControlManager extends ChangeNotifier {
 
   bool _isSub = false;
   bool _isFullscreen = false;
+  bool _isButton = false;
   bool _isAutoPause = false;
 
   /// Is player in full-screen.
   bool get isFullscreen => _isFullscreen;
+
+  /// Understand if the button pressed
+  bool get isButton => _isButton;
 
   /// Is subtitle visible.
   bool get isSub => _isSub;
@@ -27,15 +31,17 @@ class FlickControlManager extends ChangeNotifier {
   bool get _isPlaying => _flickManager.flickVideoManager!.isPlaying;
 
   /// Enter full-screen.
-  void enterFullscreen() {
+  void enterFullscreen({bool isButton = false}) {
     _isFullscreen = true;
+    _isButton = isButton;
     _flickManager._handleToggleFullscreen();
     _notify();
   }
 
   /// Exit full-screen.
-  void exitFullscreen() {
+  void exitFullscreen({bool isButton = false}) {
     _isFullscreen = false;
+    _isButton = isButton;
     _flickManager._handleToggleFullscreen();
     _notify();
   }
@@ -43,9 +49,9 @@ class FlickControlManager extends ChangeNotifier {
   /// Toggle full-screen.
   void toggleFullscreen() {
     if (_isFullscreen) {
-      exitFullscreen();
+      exitFullscreen(isButton: true);
     } else {
-      enterFullscreen();
+      enterFullscreen(isButton: true);
     }
   }
 

@@ -37,7 +37,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     with WidgetsBindingObserver {
   late FlickManager flickManager;
   bool _isFullscreen = false;
-  bool _lastMetricValue = true;
   OverlayEntry? _overlayEntry;
 
   @override
@@ -78,17 +77,14 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() async {
     bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
-    print('last: $_lastMetricValue');
-    print('is: $isPortrait');
+    print('button: ${flickManager.flickControlManager!.isButton}');
 
-    if (_lastMetricValue != isPortrait) {
+    if (!flickManager.flickControlManager!.isButton) {
       if (isPortrait && _isFullscreen) {
         flickManager.flickControlManager!.exitFullscreen();
       } else if (!isPortrait && !_isFullscreen) {
         flickManager.flickControlManager!.enterFullscreen();
       }
-
-      _lastMetricValue = isPortrait;
     }
   }
 
