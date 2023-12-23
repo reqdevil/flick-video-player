@@ -64,17 +64,10 @@ class _FlickVideoWithControlsState extends State<FlickVideoWithControls> {
             child: Stack(
               children: <Widget>[
                 Center(
-                  child: GestureDetector(
-                    onScaleStart: (details) {
-                      setState(() {
-                        isContain = !isContain;
-                      });
-                    },
-                    child: FlickNativeVideoPlayer(
-                      videoPlayerController: _videoPlayerController,
-                      fit: isContain ? BoxFit.contain : BoxFit.cover,
-                      aspectRatioWhenLoading: 16 / 9,
-                    ),
+                  child: FlickNativeVideoPlayer(
+                    videoPlayerController: _videoPlayerController,
+                    fit: BoxFit.contain,
+                    aspectRatioWhenLoading: 16 / 9,
                   ),
                 ),
                 Positioned.fill(
