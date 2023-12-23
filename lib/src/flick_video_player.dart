@@ -78,6 +78,9 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() async {
     bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
+    print('last: $_lastMetricValue');
+    print('is: $isPortrait');
+
     if (_lastMetricValue != isPortrait) {
       if (isPortrait && _isFullscreen) {
         flickManager.flickControlManager!.exitFullscreen();
