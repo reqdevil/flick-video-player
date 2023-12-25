@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
@@ -70,20 +71,20 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
       flickManager.flickControlManager!.exitFullscreen();
       return true;
     }
-
-    print('$_overlayEntry');
     return false;
   }
 
   @override
   void didChangeMetrics() async {
-    bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
+    if (Platform.isIOS) {
+      bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
-    if (!flickManager.flickControlManager!.isButton) {
-      if (isPortrait && _isFullscreen) {
-        flickManager.flickControlManager!.exitFullscreen();
-      } else if (!isPortrait && !_isFullscreen) {
-        flickManager.flickControlManager!.enterFullscreen();
+      if (!flickManager.flickControlManager!.isButton) {
+        if (isPortrait && _isFullscreen) {
+          flickManager.flickControlManager!.exitFullscreen();
+        } else if (!isPortrait && !_isFullscreen) {
+          flickManager.flickControlManager!.enterFullscreen();
+        }
       }
     }
   }
@@ -126,7 +127,6 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
     _isFullscreen = false;
     _overlayEntry?.remove();
-    print('${_overlayEntry?.mounted}');
     _overlayEntry = null;
 
     _setSystemUIOverlays();
