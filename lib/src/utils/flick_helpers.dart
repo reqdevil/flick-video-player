@@ -6,6 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 class FlickHelpers {
+  static final List<Map<String, VideoSettingEnum>> settingsList = [
+    {'Kalite': VideoSettingEnum.quality},
+    {'Oynatma Hızı': VideoSettingEnum.speed},
+  ];
+
   static final List<Map<String, SpeedEnum>> speedList = [
     {'0.25': SpeedEnum.quarter},
     {'0.50': SpeedEnum.half},

@@ -29,6 +29,11 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   bool isSettings = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return isSettings ? settingsBody() : playBody();
   }
@@ -224,55 +229,36 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: FlickHelpers.settingsList.length,
+                        itemBuilder: (context, index) {
+                          return ListTile(
                             onTap: () {
                               setState(() {
-                                settingEnum = VideoSettingEnum.quality;
+                                settingEnum = FlickHelpers
+                                    .settingsList[index].values.first;
                               });
                             },
                             title: Text(
-                              'Kalite',
+                              FlickHelpers.settingsList[index].keys.first,
                               style: TextStyle(
                                 fontFamily: 'Jost',
-                                fontSize: 18.sp,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                             ),
-                            trailing: settingEnum == VideoSettingEnum.quality
+                            trailing: settingEnum ==
+                                    FlickHelpers
+                                        .settingsList[index].values.first
                                 ? Transform.rotate(
                                     angle: pi,
                                     child: const Icon(Icons.arrow_back_ios_new),
                                   )
                                 : null,
-                          ),
-                          ListTile(
-                            onTap: () {
-                              setState(() {
-                                settingEnum = VideoSettingEnum.speed;
-                              });
-                            },
-                            title: Text(
-                              'Oynatma Hızı',
-                              style: TextStyle(
-                                fontFamily: 'Jost',
-                                fontSize: 18.sp,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            ),
-                            trailing: settingEnum == VideoSettingEnum.speed
-                                ? Transform.rotate(
-                                    angle: pi,
-                                    child: const Icon(Icons.arrow_back_ios_new),
-                                  )
-                                : null,
-                          ),
-                        ],
+                          );
+                        },
                       ),
                     ),
                     Expanded(
@@ -300,7 +286,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             FlickHelpers.qualityList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
-              fontSize: 12.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
@@ -336,7 +322,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             FlickHelpers.speedList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
-              fontSize: 12.sp,
+              fontSize: 15.sp,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
