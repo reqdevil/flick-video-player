@@ -34,10 +34,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   }
 
   Widget playBody() {
-    double padding = MediaQuery.viewPaddingOf(context).left >
-            MediaQuery.viewPaddingOf(context).right
-        ? MediaQuery.viewPaddingOf(context).left
-        : MediaQuery.viewPaddingOf(context).right;
+    double padding = 50;
 
     return Stack(
       children: <Widget>[
@@ -170,6 +167,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       ),
                       FlickFullScreenToggle(
                         size: iconSize,
+                        color: Colors.red,
+                        padding: EdgeInsets.all(iconSize),
                       ),
                     ],
                   ),
