@@ -45,7 +45,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
     super.initState();
 
     WidgetsBinding.instance.addObserver(this);
-    FlickHelpers().unlockOrientations();
+
+    if (Platform.isIOS) {
+      FlickHelpers().unlockOrientations();
+    }
 
     flickManager = widget.flickManager;
     flickManager.registerContext(context);
