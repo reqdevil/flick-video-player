@@ -22,6 +22,9 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
       Provider.of<FlickControlManager>(context);
   late FlickVideoManager videoManager = Provider.of<FlickVideoManager>(context);
 
+  late final double settingsFontSize =
+      controlManager.isFullscreen ? 12.sp : 18.sp;
+
   final double iconSize = 20;
   final double fontSize = 12;
   final double padding = 50;
@@ -222,7 +225,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             padding: controlManager.isFullscreen
                 ? EdgeInsets.symmetric(
                     horizontal: padding * 2,
-                    vertical: padding / 2,
+                    vertical: padding,
                   )
                 : EdgeInsets.all(padding / 2),
             child: Center(
@@ -246,7 +249,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                               FlickHelpers.settingsList[index].keys.first,
                               style: TextStyle(
                                 fontFamily: 'Jost',
-                                fontSize: 15.sp,
+                                fontSize: settingsFontSize,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
@@ -288,7 +291,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             FlickHelpers.qualityList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
-              fontSize: 15.sp,
+              fontSize: settingsFontSize,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
@@ -324,7 +327,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             FlickHelpers.speedList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
-              fontSize: 15.sp,
+              fontSize: settingsFontSize,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
