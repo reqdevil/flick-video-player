@@ -67,25 +67,48 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             ),
           ),
         ),
-        Positioned.fill(
-          child: FlickAutoHideChild(
-            child: Padding(
-              padding: controlManager.isFullscreen
-                  ? EdgeInsets.only(
-                      top: padding / 2,
-                      left: padding,
-                      right: padding,
-                    )
-                  : const EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      if (widget.popFunction != null &&
-                          !controlManager.isFullscreen)
+        if (widget.popFunction != null)
+          Positioned.fill(
+            child: FlickAutoHideChild(
+              child: Padding(
+                padding: controlManager.isFullscreen
+                    ? EdgeInsets.only(
+                        top: padding / 2,
+                        left: padding,
+                        right: padding,
+                      )
+                    : const EdgeInsets.all(10.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        if (!controlManager.isFullscreen)
+                          GestureDetector(
+                            onTap: widget.popFunction,
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.7),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.expand_more,
+                                color: Colors.white,
+                                size: 30,
+                              ),
+                            ),
+                          ),
+                        const Spacer(),
                         GestureDetector(
-                          onTap: widget.popFunction,
+                          onTap: () {
+                            controlManager.pause();
+
+                            setState(() {
+                              isSettings = true;
+                            });
+                          },
                           child: Container(
                             width: 35,
                             height: 35,
@@ -93,45 +116,22 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                               color: Colors.black.withOpacity(0.7),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.expand_more,
-                              color: Colors.white,
-                              size: 30,
+                            child: Center(
+                              child: Icon(
+                                Icons.settings,
+                                color: Colors.white,
+                                size: 20,
+                              ),
                             ),
                           ),
                         ),
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          controlManager.pause();
-
-                          setState(() {
-                            isSettings = true;
-                          });
-                        },
-                        child: Container(
-                          width: 35,
-                          height: 35,
-                          decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.7),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: Icon(
-                              Icons.settings,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
         Positioned.fill(
           child: FlickAutoHideChild(
             child: Padding(
@@ -165,11 +165,12 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       Expanded(
                         child: SizedBox(),
                       ),
-                      FlickFullScreenToggle(
-                        size: iconSize,
-                        decoration: BoxDecoration(color: Colors.transparent),
-                        padding: EdgeInsets.all(iconSize / 4),
-                      ),
+                      if (widget.popFunction != null)
+                        FlickFullScreenToggle(
+                          size: iconSize,
+                          decoration: BoxDecoration(color: Colors.transparent),
+                          padding: EdgeInsets.all(iconSize / 4),
+                        ),
                     ],
                   ),
                   FlickVideoProgressBar(
@@ -299,7 +300,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             FlickHelpers.qualityList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
-              fontSize: 18.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
@@ -335,7 +336,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
             FlickHelpers.speedList[index].keys.first,
             style: TextStyle(
               fontFamily: 'Jost',
-              fontSize: 18.sp,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
