@@ -24,6 +24,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
 
   final double iconSize = 20;
   final double fontSize = 12;
+  final double padding = 50;
 
   VideoSettingEnum settingEnum = VideoSettingEnum.quality;
   bool isSettings = false;
@@ -39,8 +40,6 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
   }
 
   Widget playBody() {
-    double padding = 50;
-
     return Stack(
       children: <Widget>[
         Positioned.fill(
@@ -221,8 +220,8 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
           ),
           Padding(
             padding: controlManager.isFullscreen
-                ? const EdgeInsets.all(60)
-                : const EdgeInsets.all(20),
+                ? EdgeInsets.all(padding * 2)
+                : EdgeInsets.all(padding / 2),
             child: Center(
               child: Card(
                 child: Row(
