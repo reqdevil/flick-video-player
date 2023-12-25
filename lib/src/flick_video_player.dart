@@ -66,10 +66,8 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   Future<bool> didPopRoute() async {
-    print('$_overlayEntry');
     if (_overlayEntry != null) {
       flickManager.flickControlManager!.exitFullscreen();
-      print('$_overlayEntry');
       return true;
     }
 
@@ -128,6 +126,7 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
     _isFullscreen = false;
     _overlayEntry?.remove();
+    print('${_overlayEntry?.mounted}');
     _overlayEntry = null;
 
     _setSystemUIOverlays();
