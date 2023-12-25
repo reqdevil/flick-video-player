@@ -167,7 +167,7 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
                       ),
                       FlickFullScreenToggle(
                         size: iconSize,
-                        decoration: BoxDecoration(color: Colors.red),
+                        decoration: BoxDecoration(color: Colors.transparent),
                         padding: EdgeInsets.all(iconSize / 4),
                       ),
                     ],
