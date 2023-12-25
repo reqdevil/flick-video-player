@@ -220,7 +220,10 @@ class _FlickPortraitControlsState extends State<FlickPortraitControls> {
           ),
           Padding(
             padding: controlManager.isFullscreen
-                ? EdgeInsets.all(padding * 2)
+                ? EdgeInsets.symmetric(
+                    horizontal: padding * 2,
+                    vertical: padding / 2,
+                  )
                 : EdgeInsets.all(padding / 2),
             child: Center(
               child: Card(
