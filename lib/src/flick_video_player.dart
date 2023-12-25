@@ -66,10 +66,14 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   @override
   Future<bool> didPopRoute() async {
+    print('$_overlayEntry');
     if (_overlayEntry != null) {
       flickManager.flickControlManager!.exitFullscreen();
+      print('$_overlayEntry');
       return true;
     }
+
+    print('$_overlayEntry');
     return false;
   }
 
@@ -77,16 +81,10 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
   void didChangeMetrics() async {
     bool isPortrait = await FlickHelpers().getIsPortraitByAccelerometer();
 
-    print('isButton: ${flickManager.flickControlManager!.isButton}');
-    print('isPortrait: $isPortrait');
-    print('isFullscreen: $_isFullscreen');
-
     if (!flickManager.flickControlManager!.isButton) {
       if (isPortrait && _isFullscreen) {
-        print('exit');
         flickManager.flickControlManager!.exitFullscreen();
       } else if (!isPortrait && !_isFullscreen) {
-        print('enter');
         flickManager.flickControlManager!.enterFullscreen();
       }
     }
@@ -125,12 +123,9 @@ class _FlickVideoPlayerState extends State<FlickVideoPlayer>
 
   _exitFullscreen() async {
     /// Disable previous wakelock setting.
-    print('wakelock');
     await WakelockPlus.disable();
     await WakelockPlus.enable();
 
-    print('overlay removal');
-    print('overlay: $_overlayEntry');
     _isFullscreen = false;
     _overlayEntry?.remove();
     _overlayEntry = null;
