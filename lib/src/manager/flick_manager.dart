@@ -27,7 +27,10 @@ class FlickManager {
       flickManager: this,
     );
     _flickVideoManager = FlickVideoManager(
-        flickManager: this, autoPlay: autoPlay, autoInitialize: autoInitialize);
+      flickManager: this,
+      autoPlay: autoPlay,
+      autoInitialize: autoInitialize,
+    );
     _flickDisplayManager = FlickDisplayManager(
       flickManager: this,
     );

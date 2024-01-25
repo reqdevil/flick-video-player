@@ -6,11 +6,11 @@ typedef TimerCancelCallback(bool playNext);
 ///
 /// Responsible to maintain life-cycle of [VideoPlayerController].
 class FlickVideoManager extends ChangeNotifier {
-  FlickVideoManager(
-      {required FlickManager flickManager,
-      required this.autoPlay,
-      required this.autoInitialize})
-      : _flickManager = flickManager;
+  FlickVideoManager({
+    required FlickManager flickManager,
+    required this.autoPlay,
+    required this.autoInitialize,
+  }) : _flickManager = flickManager;
 
   final FlickManager _flickManager;
   bool _currentVideoEnded = false;
